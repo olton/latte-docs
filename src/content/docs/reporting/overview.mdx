@@ -1,0 +1,32 @@
+---
+title: Overview
+description: Overview of EasyTest reporting
+slug: reporting/overview
+---
+
+EasyTest provides a powerful and flexible reporting system that allows you to customize the output of your test results.
+
+## Built-in Reporters
+EasyTest comes with several built-in reporters that can be used to generate different types of reports. 
+These reporters can be used to display test results in various formats, such as `console` output, `HTML`, `LCOV`, and `JUNIT`.
+
+## Requirements
+To use the built-in reporters, you must set the `--coverage` option when running your tests. This option enables coverage reporting and allows you to specify the type of report you want to generate.:
+
+```bash
+easytest --coverage
+```
+
+### Console Reporter
+The console reporter is the default reporter used by EasyTest. It displays test results in the console, providing a quick and easy way to see the status of your tests.
+This is a **default reporter** and doesn't require any additional configuration.
+
+### HTML Reporter
+The HTML reporter generates a detailed HTML report of your test results. This report includes information about passed and failed tests, as well as any errors or warnings that occurred during the test run. The HTML report can be easily shared with team members or stakeholders.
+
+### LCOV Reporter
+The LCOV reporter generates a coverage report in the LCOV format. This report can be used with various code coverage tools to visualize the coverage of your tests. The LCOV report includes information about which lines of code were executed during the test run and which lines were not.
+
+### JUnit Reporter
+The JUnit reporter generates a report in the JUnit XML format. This report can be used with various CI/CD tools to integrate test results into your build pipeline. The JUnit report includes information about passed and failed tests, as well as any errors or warnings that occurred during the test run.
+

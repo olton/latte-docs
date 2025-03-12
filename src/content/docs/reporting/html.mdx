@@ -1,5 +1,35 @@
 ---
-title: HTML Report
+title: HTML Reporter
 description: Generating HTML reports in EasyTest
 slug: reporting/html
 ---
+
+The HTML reporter generates a detailed HTML report of your test results. This report includes information about passed and failed tests, as well as any errors or warnings that occurred during the test run. The HTML report can be easily shared with team members or stakeholders.
+
+## Usage
+
+To use the HTML reporter, simply run your tests with the `--report-type=html` options set. For example:
+
+```bash
+easytest --coverage --report-type=html
+```
+
+## Report Directory
+
+This will generate an HTML report in the `coverage` directory by default. You can specify a different output directory using the `--report-dir` option:
+
+```bash
+easytest --coverage --report-type=html --report-dir=reports
+```
+
+## Report File
+
+You can also specify a custom report file name using the `--report-file` option. For example:
+
+```bash
+easytest --coverage --report-type=html --report-file=report.html
+```
+
+This will generate an HTML report with the specified file name in the `coverage` directory. You can open this file in a web browser to view the detailed test results.
+
+

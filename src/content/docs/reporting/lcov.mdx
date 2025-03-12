@@ -1,5 +1,36 @@
 ---
-title: LCOV Report
+title: LCOV Reporter
 description: Generating LCOV reports in EasyTest
 slug: reporting/lcov
 ---
+
+The LCOV reporter generates a coverage report in the LCOV format. This report can be used with various code coverage tools to visualize the coverage of your tests. 
+The LCOV report includes information about which lines of code were executed during the test run and which lines were not.
+
+## Usage
+
+To use the LCOV reporter, simply run your tests with the `--report-type=lcov` options set. For example:
+
+```bash
+easytest --coverage --report-type=lcov
+```
+
+## Report Directory
+
+This will generate an LCOV report in the `coverage` directory by default. You can specify a different output directory using the `--report-dir` option:
+
+```bash
+easytest --coverage --report-type=lcov --report-dir=reports
+```
+
+## Report File
+
+You can also specify a custom report file name using the `--report-file` option. For example:
+
+```bash
+easytest --coverage --report-type=lcov --report-file=coverage.info
+```
+
+
+The LCOV report will be saved in the specified directory, and you can use it with various code coverage tools to visualize the coverage of your tests.
+

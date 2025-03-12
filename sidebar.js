@@ -30,6 +30,8 @@ export default [
     {
         label: "Reporting", 
         items: [
+            {label: "Overview", slug: "reporting/overview"},
+            {label: "Console Reporter", slug: "reporting/console"},
             {label: "LCOV Reporter", slug: "reporting/lcov"},
             {label: "HTML Reporter", slug: "reporting/html"},
             {label: "JUnit Reporter", slug: "reporting/junit"},
@@ -46,6 +48,14 @@ export default [
     },
     {
         label: "Resources",
-        items: [],
+        items: [
+            {label: "EasyTest", link: "https://github.com/olton/easytest"},
+            {label: "Docs", link: "https://github.com/olton/easytest-docs"},
+            {label: "Contributing", link: "https://github.com/olton/easytest"},
+            {label: "License", link: "https://github.com/olton/easytest/blob/master/LICENSE"},
+            {label: "Metro UI", link: "https://metroui.org.ua"},
+            {label: "Panda Templates", link: "https://panda.metroui.org.ua"},
+            {label: "Author", link: "https://pimenov.com.ua"}
+        ],
     },
 ]
