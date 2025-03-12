@@ -39,10 +39,10 @@ To use EasyTest with `TypeScript` you need to install `tsx` (you can use another
 
 Add the following command to your `package.json` file:
 
-```json
+```json title="package.json"
 {
   "scripts": {
-    "test": "cross-env NODE_OPTIONS=\"--import tsx\" easytest"
+    "test": "cross-env NODE_OPTIONS='--import tsx' easytest"
   }
 }
 ```

@@ -3,3 +3,33 @@ title: Debugging Tests
 description: Debugging tests in EasyTest
 slug: advanced/debug
 ---
+
+You can debug your tests using IDE's built-in debugging tools. This allows you to set breakpoints, inspect variables, and step through your code to identify issues.
+
+## ![](../../../assets/WebStorm.svg) WebStorm
+
+To debug your tests in WebStorm, follow these steps:
+
+1. Open `Run/Debug Configurations` in WebStorm.
+2. Click on the `+` icon to add a new configuration.
+3. Select `Node.js` from the list.
+4. In the `File` field, add the following: `node_modules/.bin/easytest`.
+5. In the `Application parameters` field, add your enable debug option: `--debug`. If you need to pass any other parameters. For example: `--debug --dom`.
+6. In the `Working directory` field, set the path to your project directory.
+7. Click `OK` to save the configuration.
+8. Add command `debugger` in your test files where you want to pause execution.
+
+```js title="example.test.js"
+describe(`Array tests`, () => {
+    it('toBeArray [] == []', () => {
+        debugger
+        return expect([]).toBeArray()
+    })
+})
+```
+
+Now you can run the debugger by selecting the configuration you created and clicking the `Debug` button. The execution will pause at the `debugger` statement, allowing you to inspect variables and step through your code.
+
+## ![](../../../assets/VisualStudioCode.svg) Visual Studio Code
+
+To debug your tests in VSC, follow these steps:
