@@ -1,0 +1,32 @@
+---
+const {height = 300, tab = "result", hash, user = "olton", title = "", theme = "dark"} = Astro.props;
+const url = `https://codepen.io/${user}/pen/${hash}`;
+const style = `height: ${height}px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;`
+---
+
+<p class="codepen"
+   data-height={height}
+   data-default-tab={tab}
+   data-slug-hash={hash}
+   data-pen-title={title}
+   data-user={user}
+   style={style}
+   data-theme-id={theme}
+>
+    <span>See the Pen <a href={url} target="_blank" rel="noopener noreferrer">{title}</a> by <a href="https://pimenov.com.ua">Serhii Pimenov</a> on <a
+            href="https://codepen.io">CodePen</a>.</span>
+</p>
+
+<script is:inline>
+    function changeIFrameTheme(){
+        const theme = document.documentElement.getAttribute('data-theme');
+        const iframes = document.querySelectorAll('iframe');
+        iframes.forEach(iframe => {
+            const src = iframe.src;
+            iframe.src = src.replace(/theme-id=dark|theme-id=light/, `theme-id=${theme}`);
+        });
+    }
+    setTimeout(()=>{
+        changeIFrameTheme();
+    }, 100);
+</script>

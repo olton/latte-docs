@@ -1,17 +1,18 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
+title: EasyTest
+description: Framework for testing JavaScript/TypeScript with enabled DOM
 template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
+  tagline: Framework for testing JavaScript/TypeScript with DOM support and built-in headless browser!
   image:
-    file: ../../assets/houston.webp
+    file: ../../assets/user-testing.svg
   actions:
-    - text: Example Guide
-      link: /guides/example/
-      icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
+    - text: Read Docs
+      link: /getting-started/overview
+      icon: open-book
+      variant: secondary 
+    - text: GitHub
+      link: https://github.com/olton/easytest
       icon: external
       variant: minimal
 ---
@@ -20,17 +21,23 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 
 ## Next steps
 
-<CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
+<CardGrid>
+	<Card title="JavaScript/TypeScript" icon="seti:tsconfig">
+        Hassle-free testing of JavaScript and TypeScript (with using tsx) code. Write tests in a simple and clear way on JavaScript and TypeScript.
 	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
+	<Card title="Config Free" icon="setting">
+        No need to configure anything, just install and start testing. EasyTest will automatically configure everything for you. Also you can configure it manually.
 	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
+	<Card title="Built-in coverage tool" icon="list-format">
+        EasyTest has a built-in coverage tool that allows you to see the coverage of your tests. EasyTest will automatically generate a LCOV report for you.
 	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
+	<Card title="DOM Testing" icon="rocket">
+        EasyTest has a built-in DOM testing tool that allows you to test your code with enabled DOM.
+	</Card>
+	<Card title="100+ Matchers" icon="approve-check">
+        EasyTest has a built-in matcher library that allows you to test your code with a large number of matchers.
+	</Card>
+	<Card title="Easy Expanding" icon="seti:crystal_embedded">
+        EasyTest is easy to expand. You can add your own matchers, coverage tools, DOM testing tools, and more.
 	</Card>
 </CardGrid>

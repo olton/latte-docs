@@ -1,0 +1,467 @@
+---
+title: Headless Browser
+description: Testing with headless browser in EasyTest
+slug: features/browser
+---
+
+If you need to interact with a website, you can use the built-in headless browser. This is useful for web scraping, testing, and more.
+We use [`Puppeteer`](https://pptr.dev/) to create a headless browser. 
+
+:::tip
+`Pupperteer` is a Node.js library that provides a high-level API over the Chrome DevTools Protocol.
+:::
+
+## Access to the Browser
+
+The `Browser` object is available in the global scope with `B` name. Also, you can import it from the `easytest` package.
+
+```js
+import { B } from "@olton/easytest";
+
+beforeAll(async () => {
+    await B.create();
+});
+
+afterAll(async () => {
+    await B.bye();
+});
+
+describe("Google", () => {
+    it("Search", async () => {
+        await B.visit("https://example.com");
+        const title = await B.document.title();
+        expect(title).toBe("Example Domain");
+    });
+});
+```
+
+## Methods
+The `Browser` object provides a set of methods to interact with the browser. The methods are grouped into categories for better organization.
+
+## Core
+
+### `B.create()`
+
+Creates a new browser instance. This method returns a promise that resolves when the browser is ready to use.
+
+```js
+const options = {
+    headless: "shell",
+    args: [
+        '--no-sandbox',
+    ],
+    detached: true,
+    dumpio: false,
+    env: {},
+    executablePath: undefined,
+    handleSIGHUP: true,
+    handleSIGINT: true,
+    handleSIGTERM: true,
+    onExit: undefined,
+    pipe: false,
+    log: false,
+    coverage: {
+        filter: '',
+        reportFileName: 'lcov-browser.info',
+        includeRawScriptCoverage: true,
+        reportAnonymousScripts: true,
+        resetOnNavigation: true,
+        useBlockCoverage: true,
+    }
+};
+await B.create(options);
+```
+
+### `B.bye()`
+Closes the browser instance. This method returns a promise that resolves when the browser is closed.
+
+```js
+await B.bye();
+```
+
+### `B.emulate()`
+Emulates a device. This method returns a promise that resolves when the device is emulated.
+
+```js
+await B.emulate(device);
+```
+
+To get the list of devices, use the `B.devices` property.
+
+```js
+const devices = B.devices;
+```
+
+## Pages
+
+### `B.pages()`
+Returns an array of all pages in the browser. This method returns a promise that resolves to an array of pages.
+
+```js
+const pages = await B.pages();
+```
+
+### `B.page()`
+Returns the page by index. If page index is not specified, it returns the current page. This method returns a promise that resolves to the page.
+
+```js
+const page = await B.page(index);
+```
+
+### `B.pageCount()`
+Returns the number of pages in the browser. This method returns a promise that resolves to the number of pages.
+
+```js
+const count = await B.pageCount();
+```
+
+### `B.newPage()`
+
+Creates a new page in the browser. This method returns a promise that resolves to the new page.
+
+```js
+const page = await B.newPage();
+```
+
+### `B.setPage()`
+Sets the current page. Page is a page object. This method returns a promise that resolves when the page is set.
+
+```js
+await B.setPage(page);
+```
+
+### `B.setPageByIndex()`
+Sets the current page by index. This method returns a promise that resolves when the page is set.
+
+```js
+await B.setPageByIndex(index);
+```
+
+### `B.close()`
+
+Closes the current page. This method returns a promise that resolves when the page is closed.
+
+```js
+await B.close();
+```
+
+### `B.closeAll()`
+Closes all pages in the browser. This method returns a promise that resolves when all pages are closed.
+
+```js
+await B.closeAll();
+```
+
+### `B.closePage()`
+Closes the page by index or page object or current. This method returns a promise that resolves when the page is closed.
+
+```js
+const runBeforeOnLoad = false
+
+await B.closePage(index, runBeforeOnLoad);
+await B.closePage(page, runBeforeOnLoad);
+await B.closePage(null, runBeforeOnLoad);
+```
+
+## Elements
+
+### `B.$()`
+
+Finds elements on the page. This method returns a promise that resolves to the element.
+
+```js
+const element = await B.$("selector");
+```
+
+### `B.find()`
+Finds elements on the page. This method returns a promise that resolves to an array of elements.
+
+```js   
+const elements = await B.find("selector");
+```
+
+### `B.findFirst()`
+Finds the first element on the page. This method returns a promise that resolves to the element.
+
+```js
+const element = await B.findFirst("selector");
+```
+
+### `B.waitFor()`
+Waits for an element to be added to the page. This method returns a promise that resolves when the element is added.
+
+```js
+const element = await B.waitFor("selector", timeout);
+```
+
+## Interaction
+
+### `B.click()`
+
+Clicks on an element. This method returns a promise that resolves when the element is clicked.
+
+```js
+const element = await B.click("selector");
+```
+
+### `B.tap()`
+Taps on an element. This method returns a promise that resolves when the element is tapped.
+
+```js
+const element = await B.tap("selector");
+```
+
+### `B.type()`
+Types text into an element. This method returns a promise that resolves when the text is typed.
+
+```js
+const element = await B.type("selector", "text");
+```
+
+
+## CSS
+
+### `B.addCss()`
+
+Adds CSS to the page. This method returns a promise that resolves when the CSS is added.
+
+```js
+const css = `
+    body {
+        background: red;
+    }
+`;
+await B.addCss({content: css, path: "/path_to_file/style.css", url: "https://example.com/style.css"});
+```
+
+You can specify the following options:
+- `content` - CSS content
+- `path` - path to the CSS file
+- `url` - URL to the CSS file
+
+### `B.addCssFromString()`
+
+Adds CSS to the page from a string. This method returns a promise that resolves when the CSS is added.
+
+```js
+const css = `
+    body {
+        background: red;
+    }
+`;
+await B.addCssFromString(css);
+```
+
+### `B.addCssFromFile()`
+Adds CSS to the page from a file. This method returns a promise that resolves when the CSS is added.
+
+```js
+const path = "/path_to_file/style.css";
+await B.addCssFromFile(path);
+```
+
+### `B.addCssFromUrl()`
+Adds CSS to the page from a URL. This method returns a promise that resolves when the CSS is added.
+
+```js
+const url = "https://example.com/style.css";
+await B.addCssFromUrl(url);
+```
+
+## JavaScript
+
+### `B.addJs()`
+Adds JavaScript to the page. This method returns a promise that resolves when the JavaScript is added.
+
+```js
+const js = `
+    function hello() {
+        console.log('Hello world');
+    }
+`;
+await B.addJs({content: js, path: "/path_to_file/script.js", url: "https://example.com/script.js"});
+```
+
+You can specify the following options:
+- `content` - JavaScript content
+- `path` - path to the JavaScript file
+- `url` - URL to the JavaScript file
+- `id` - id of the script tag
+- `type` - type of the script tag
+
+### `B.addFunction()`
+
+Adds a function to the page. The method adds a function called name on the page's window object.
+
+```js
+await B.addFunction("hello", () => {
+    console.log("Hello world");
+});
+
+await B.exec(async () => {
+    await window.hello();
+})
+```
+
+### `B.exec()`
+Executes a js code in the context of the page. This method returns a promise that resolves to the result of the function.
+
+**Function object**
+```js
+const result = await B.exec(() => {
+  return Promise.resolve(8 * 7);
+});
+console.log(result); // prints "56"
+```
+
+**Function as string**
+```js
+const result = await B.exec("1 + 2");
+```
+
+**Pass arguments**
+```js
+const bodyHandle = await page.$('body');
+const html = await B.exec(body => body.innerHTML, bodyHandle);
+await bodyHandle.dispose();
+```
+
+## Navigation
+
+### `B.visit()`
+Navigate to a URL. This method returns a promise that resolves when the page is loaded.
+
+```js
+await B.visit("https://example.com", {
+    referer: "https://google.com",
+    refererPolicy: "no-referrer"
+});
+```
+
+
+### `B.back()`
+Goes back to the previous page. This method returns a promise that resolves when the page is loaded.
+
+```js
+await B.back();
+```
+
+### `B.forward()`
+Goes forward to the next page. This method returns a promise that resolves when the page is loaded.
+
+```js
+await B.forward();
+```
+
+### `B.reload()`
+Reloads the current page. This method returns a promise that resolves when the page is reloaded.
+
+```js
+await B.reload();
+```
+
+
+## Document
+The `document` object is a wrapper around the page's document object. It provides methods to interact with the page's DOM.
+
+### `B.document.title()`
+The title of the page. This method returns a promise that resolves to the title of the page.
+
+```js
+const title = await B.document.title();
+```
+
+### `B.document.html()`
+The full HTML contents of the page, including the DOCTYPE. This method returns a promise that resolves to the HTML of the page.
+
+```js
+const html = await B.document.html();
+```
+
+### `B.document.url()`
+The URL of the page. This method returns a promise that resolves to the URL of the page.
+
+```js
+const url = await B.document.url();
+```
+
+### `B.document.cookies()`
+The cookies of the page. You can pass an array of URLs to get cookies for specific pages. This method returns a promise that resolves to an array of cookies.
+
+```js
+const cookies = await B.document.cookies(urls = []);
+```
+
+### `B.document.body()`
+The body of the page. This method returns a promise that resolves to the body of the page.
+
+```js
+const body = await B.document.body();
+```
+
+## Window
+The `window` object is a wrapper around the page's window object. It provides methods to interact with the page's window.
+
+### `B.window()`
+Get the window object of the page. This method returns a promise that resolves to the window object.
+
+```js
+const window = await B.window();
+```
+
+## Utils
+
+### `B.screenshot()`
+Takes a screenshot of the page. This method returns a promise that resolves to the screenshot.
+
+```js
+const options = {
+    fullPage: false, 
+    quality: 100, // 0-100
+    type: "png", // png, jpeg, webp
+}
+const screenshot = await B.screenshot(path, options);
+```
+
+### `B.pdf()`
+Generates a PDF of the page. This method returns a promise that resolves to the PDF.
+
+```js
+const options = {
+}
+const pdf = await B.pdf(path, options);
+```
+
+### `B.metrics()`
+Returns the metrics of the page. This method returns a promise that resolves to the metrics of the page.
+
+```js
+const metrics = await B.metrics();
+console.log(metrics);
+```
+
+## Code Coverage
+
+### `B.startCoverage()`
+Starts code coverage. This method returns a promise that resolves when the coverage is started.
+
+You can pass an options object to specify the coverage options:
+
+```js
+const coverageOptions = {
+    includeRawScriptCoverage: true,
+    reportAnonymousScripts: true,
+    resetOnNavigation: true,
+    useBlockCoverage: true
+}
+
+await B.startCoverage(coverageOptions);
+```
+
+### `B.stopCoverage()`
+Stops code coverage. This method returns a promise that resolves when the coverage is stopped.
+
+```js
+const coverage = await B.stopCoverage();
+console.log(coverage);
+```

@@ -1,0 +1,6 @@
+---
+import SourceButton from "./SourceButton.astro"
+const {repo, text="Package", style} = Astro.props
+---
+
+<SourceButton icon="seti:npm" text={text} href={`https://www.npmjs.com/package/${repo}`} style={style}/>

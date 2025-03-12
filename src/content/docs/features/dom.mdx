@@ -1,0 +1,154 @@
+---
+title: Testing DOM Elements
+description: Testing DOM elements with EasyTest
+slug: features/dom
+---
+
+EasyTest has a built-in DOM object that allows you to test HTML elements in your tests (we use `happy-dom` to create one).
+
+## Enable DOM Support
+
+To enable DOM support, you need to set the `dom` option to `true` in the configuration file or use the `-d, --dom` option in the command line.
+
+```bash
+easytest -d
+```
+
+When you enabled DOM, global objects such as `window`, `document` and corresponding global methods and interfaces are created (for example `HTMLElement`).
+
+```js title=example.test.js
+beforeAll(() => {
+    DOM.css.fromUrl('https://cdn.metroui.org.ua/current/metro.css')
+    DOM.js.fromUrl('https://cdn.metroui.org.ua/current/metro.js')
+
+    DOM.html(`
+        <div id="accordion">
+            <div class="frame">
+                <div class="heading">Heading</div>
+                <div class="content">Content</div>
+            </div>
+        </div>
+    `)
+})
+
+describe(`Accordion tests`, () => {
+    it(`Create accordion`, async () => {
+        const accordion = window
+            .Metro
+            .makePlugin("#accordion", 'accordion')[0]
+
+        expect(accordion).hasClass('accordion')
+    })
+})
+```
+
+## DOM Object
+
+EasyTest exports the `DOM` object that contains methods and properties for working with the DOM (also `DOM` available as a global object).
+
+## CSS
++ `css` - scope, contains methods to load CSS files.
++ `js` - scope, contains methods to load JavaScript files.
+
+### `css.fromFile()`  
+Loads CSS styles from the file (method create `style` tag). 
+```js
+DOM.css.fromFile('style.css')
+```
+
+### `css.fromString()` 
+Loads CSS styles from the string (method create `style` tag). 
+```js
+DOM.css.fromString(`
+    body { 
+        background: red; 
+    }
+`)
+```
+
+### `css.fromUrl()` 
+Loads CSS from url (method create `link` tag). 
+```js
+DOM.css.fromUrl('https://example.com/style.css')
+```
+
+### `css.fromObject()` 
+Loads CSS from an object (method create `style` tag).
+```js
+DOM.css.fromObject({ 
+    background: 'red' 
+})
+```
+
+## JS
+
+### `js.fromFile()` 
+Loads JavaScript from the file (create `script` tag).
+```js
+DOM.js.fromFile('script.js')
+```
+
+### `js.fromString()` 
+Loads JavaScript from the string (create `script` tag).
+```js
+DOM.js.fromString(`
+    function hello() {
+        console.log('Hello world')
+    }
+`)
+```
+
+### `js.fromUrl()` 
+Loads JavaScript from url (create `script` tag).
+```js
+DOM.js.fromUrl('https://example.com/lib.js')
+```
+
+
+## Methods
+
+Object `DOM` has the following methods:
+
++ `setup(options)` - sets up the DOM object.
++ `bye()` - removes the DOM object.
++ `html(str)` - Replace document body `innerHTML` with `str`.
++ `eval(code)` - evaluates the JavaScript code.
++ `$(selector)` - synonym for document.querySelector().
++ `$$(selector)` - synonym for document.querySelectorAll().
++ `flush()` - removes all elements from the document.
++ `waitFor(selector, timeout)` - waits for the element to be added to the document.
+
+## Setup DOM
+EasyTest automatically sets up the DOM object before each test. But you can set up the DOM object manually. All setup options are optional.
+
+```js
+DOM.setup({
+    url: 'http://localhost:8000/',
+    disableJavaScriptEvaluation: false,
+    disableJavaScriptFileLoading: false,
+    disableCSSFileLoading: false,
+    disableComputedStyleRendering: false,
+    handleDisabledFileLoadingAsSuccess: false,
+    errorCapture: 'processLevel',
+    navigation: {
+        disableMainFrameNavigation: false,
+        disableChildFrameNavigation: false,
+        disableChildPageNavigation: false,
+        disableFallbackToSetURL: false,
+        crossOriginPolicy: 'no-cors'
+    },
+    navigator: {
+        userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+        maxTouchPoints: 5
+    },
+    timer: { 
+        maxTimeout: -1, 
+        maxIntervalTime: -1, 
+        maxIntervalIterations: -1 
+    },
+    device: { 
+        prefersColorScheme: 'light', 
+        mediaType: 'screen' 
+    }
+})
+```

@@ -1,0 +1,35 @@
+---
+title: Overview
+description: Overview of EasyTest
+slug: getting-started/overview
+---
+
+import Leader from '../../../components/Leader.astro'
+
+<Leader content="EasyTest is a framework for general testing with DOM support and the ability to test entire HTML pages!" />
+
+## What is EasyTest?
+
+EasyTest is a testing framework that simplifies the process of writing and running tests for your applications. It provides a user-friendly interface and powerful features to help you ensure the quality and reliability of your code.
+With EasyTest, you can easily create and manage test cases, run them with a single command, and generate detailed reports on test results. Whether you're testing web applications, APIs, or any other type of software, EasyTest has you covered.
+
+## Core features:
+
+- No need to import `it`, `test`, `describe` or `expect` in your test file. These functions are available globally.
+- Test `JavaScript` and `TypeScript` code at one time.
+- Asynchronous code testing.
+- Global `DOM` object for testing `HTML elements`.
+- Built-in `coverage` tool.
+- `Verbose` or non verbose mode.
+- `Mock` functions and objects.
+- Big set of built-in matchers.
+- Extend `expect` function with your own matchers.
+- Compatible with `codecov` report viewer.
+- A lot of expects in one test case.
+- Setup and Teardown functions (`beforeEach`, `afterEach`, `beforeAll`, `afterAll`).
+- `Watching mode` and `parallel` test executing.
+
+## Why?
+While working on [Metro UI](https://metroui.org.ua) and [EasyQuery](https://korzh.com), there was a need to test code with support for DOM tests. EasyTest was created for these purposes.
+
+EasyTest was created as a framework for general testing with DOM support and the ability to test entire HTML pages, **but it can be used for any JavaScript/TypeScript project**.

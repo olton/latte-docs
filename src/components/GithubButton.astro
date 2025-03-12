@@ -1,0 +1,6 @@
+---
+import SourceButton from "./SourceButton.astro"
+const {user, repo, text="Repository", style} = Astro.props
+---
+
+<SourceButton icon="github" text={text} href={`https://github.com/${user}/${repo}`} style={style}/>

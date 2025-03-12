@@ -1,0 +1,91 @@
+---
+title: Quick Start
+description: Quick start guide for EasyTest
+slug: getting-started/quick-start
+---
+
+import { Tabs, TabItem, Badge } from '@astrojs/starlight/components';
+
+EasyTest is a powerful testing framework that allows you to write tests for your applications with ease. This quick start guide will help you set up EasyTest and run your first test.
+
+## Installation
+
+Install `EasyTest` as a **development dependency** in your project. You can do this using your favorite package manager. Here are the commands for some popular package managers:
+
+<Tabs>
+    <TabItem label="npm" icon="seti:npm">
+        ```bash
+        npm install -D @olton/easytest
+        ```
+    </TabItem>
+    <TabItem label="pnpm" icon="pnpm">
+        ```bash
+        pnpm -D install @olton/easytest
+        ```
+    </TabItem>
+    <TabItem label="yarm" icon="seti:yarn">
+        ```bash
+        yarn add -D @olton/easytest
+        ```
+    </TabItem>
+    <TabItem label="bun" icon="bun">
+        ```bash
+        bun add -D @olton/easytest
+        ```
+    </TabItem>
+</Tabs>
+
+## Add command to package.json
+
+Add the following command to your `package.json` file:
+
+```json
+{
+  "scripts": {
+    "test": "easytest"
+  }
+}
+```
+
+## Create your first test
+
+Create a new file named `example.test.js` in your project directory and add the following code:
+
+```js
+function hello() {
+    return "Hello"
+}
+
+describe(`Common tests suite`, () => {
+    it(`says hello`, () => {
+        return expect(hello()).toBe("Hello")
+    })
+})
+```
+
+## Run the test
+
+Run the following command in your terminal:
+
+<Tabs>
+    <TabItem label="npm" icon="seti:npm">
+        ```bash
+        npm test
+        ```
+    </TabItem>
+    <TabItem label="pnpm" icon="pnpm">
+        ```bash
+        pnpm test
+        ```
+    </TabItem>
+    <TabItem label="yarm" icon="seti:yarn">
+        ```bash
+        yarn test
+        ```
+    </TabItem>
+    <TabItem label="bun" icon="bun">
+        ```bash
+        bun test
+        ```
+    </TabItem>
+</Tabs>

@@ -1,0 +1,72 @@
+---
+title: Setup and Teardown
+description: Setup and teardown methods in EasyTest
+slug: features/setup-and-teardown
+---
+
+Often while writing tests, you have some setup work that needs to happen before tests run, and you have some finishing work that needs to happen after tests run. 
+
+EasyTest provides helper functions to handle this. These functions are called hooks. Hooks are functions that allow you to run code before or after each test case or test suite.
+
+The following hooks are available to you:
+- [`beforeAll()`](#beforeall)
+- [`afterAll()`](#afterall)
+- [`beforeEach()`](#beforeeach)
+- [`afterEach()`](#aftereach)
+
+They're useful for setting up and tearing down test environments, initializing variables, or performing any other necessary actions.
+
+:::caution
+You must specify hooks in the test file, in the global scope or inside a `describe` blocks.
+:::
+
+```js
+beforeAll(() => {
+    // Code to run before all tests
+})
+
+describe(`Common tests suite`, () => {
+    it(`1 === 1`, () => {
+        expect(1).toBe(1)
+    })
+})
+```
+
+### beforeAll()
+
+This method is used to run a function before all tests in a test file. It takes a callback function as its argument.
+
+```js
+beforeAll(() => {
+    // Code to run before all tests
+})
+```
+
+### afterAll()
+
+This method is used to run a function after all tests in a test file. It takes a callback function as its argument.
+
+```js
+afterAll(() => {
+    // Code to run after all tests
+})
+```
+
+### beforeEach()
+This method is used to run a function before each test case. It takes a callback function as its argument.
+
+```js
+beforeEach(() => {
+    // Code to run before each test
+})
+```
+
+### afterEach()
+This method is used to run a function after each test case. It takes a callback function as its argument.
+
+```js
+afterEach(() => {
+    // Code to run after each test
+})
+```
+

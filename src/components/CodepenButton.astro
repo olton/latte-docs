@@ -1,0 +1,6 @@
+---
+import SourceButton from "./SourceButton.astro"
+const {user, id, text="Example on Codepen", style} = Astro.props
+---
+
+<SourceButton icon="codePen" text={text} href={`https://codepen.io/${user}/pen/${id}`} style={style}/>

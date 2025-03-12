@@ -1,0 +1,44 @@
+---
+title: Testing Async Code
+description: Testing asynchronous code with EasyTest
+slug: features/async-code
+---
+
+EasyTest provides a simple way to test asynchronous code with `async/await`.
+
+```js title=async-code.test.js
+function fetchData() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('peanut butter');
+        }, 1000);
+    });
+}
+
+describe(`Async tests`, () => {
+    it(`fetchData returns peanut butter`, async () => {
+        const data = await fetchData();
+        expect(data).toBe('peanut butter');
+    })
+})
+```
+
+## toBeResolvedWith()
+
+The `toBeResolvedWith` matcher is used to test that a promise resolves with a specific value. It takes the expected value as its argument.
+
+```js title=async-code.test.js
+function fetchData() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('peanut butter');
+        }, 1000);
+    });
+}
+describe(`Async tests`, () => {
+    it(`fetchData returns peanut butter`, async () => {
+        const data = await fetchData();
+        expect(data).toBeResolvedWith('peanut butter');
+    })
+})
+```

@@ -1,0 +1,34 @@
+---
+title: Custom Matchers
+description: Creating custom matchers in EasyTest
+slug: advanced/custom-matchers
+---
+
+EasyTest provides a powerful way to create custom matchers, allowing you to extend the functionality of the built-in matchers to suit your specific testing needs. 
+
+This is particularly useful when you want to encapsulate complex assertions or when you want to create reusable matchers for your test suite.
+
+## Creating a Custom Matcher
+If you miss the built-in matchers, you can easily create your own by extending an instance of Expect.
+
+To create a custom matcher, you can extend `Expect` class.
+
+```js
+import {Expect} from "@olton/easytest";
+
+class MyExpect extends Expect {
+    toBeEven() {
+        let received = this.received
+        let result = received % 2 === 0
+        if (!result) {
+            this.message = `Expected ${received} to be even`
+        }
+    }
+}
+
+const expect = (received) => new MyExpect(received)
+
+test(`Custom expect`, () => {
+    expect(2).toBeEven()
+})
+```

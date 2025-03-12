@@ -1,0 +1,18 @@
+---
+import Default from '@astrojs/starlight/components/Footer.astro';
+
+const isHomepage = Astro.locals.starlightRoute.id === '';
+---
+
+{
+    isHomepage ? (
+       <footer class="page-footer">
+           <p>Copyright 2024-{new Date().getFullYear()} by <a href="https://pimenov.com.ua">Serhii Pimenov</a></p>
+           <p><small>EasyTest 0.47.0, Doc 2025.1</small></p>
+       </footer>
+    ) : (
+        <Default {...Astro.props}>
+            <slot />
+        </Default>
+    )
+}

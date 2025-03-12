@@ -1,0 +1,77 @@
+---
+title: Configuration
+description: Configuration options for EasyTest
+slug: getting-started/configuration
+---
+
+EasyTest created as a config-free testing framework. But you can configure it to your needs.
+
+## Default configuration
+
+EasyTest has a default configuration that is used when no other configuration is provided. This default configuration includes:
+
+```json
+{
+    "include": ["**/*.{spec,test}.{t,j}s", "**/*.{spec,test}.{ts,js}x"],
+    "exclude": ["node_modules/**"],
+    "skip": "",
+    "test": "",
+    "verbose": false,
+    "dom": false,
+    "coverage": false,
+    "skipPassed": false,
+    "reportType": "lcov",
+    "reportDir": "coverage",
+    "reportFile": "",
+    "parallel": false,
+    "maxWorkers": 4,
+    "watch": false
+}
+```
+
+## CLI options
+
+You can override the default configuration using command line options. To see all available options, run the following command:
+
+```bash
+easytest --help
+```
+
++ `--version` - show version
++ `-w`, `--watch` - Run in watch mode
++ `-p`, `--parallel` - Run tests in parallel
++ `-d`, `--dom` - Enable DOM support
++ `-v`, `--verbose` - Enable verbose mode
++ `-c`, `--coverage` - Enable coverage
++ `--max-workers` - Maximum number of workers to use in parallel mode
++ `--include` - Patterns for test files
++ `--exclude` - Patterns for files to exclude
++ `--report-type` - Type of report to generate ['lcov', 'html', 'junit']
++ `--report-dir` - Directory to save the report
++ `--report-file` - File to save the report
++ `--skip` - Patterns for tests to skip
++ `--test` - Test file to run
++ `--init` - Create EasyTest config in the current directory
++ `--help` - Show help
+
+### Run tests
+You can run tests using the following command:
+
+```bash
+easytest -d -w
+```
+
+```bash
+easytest --coverage --verbose --include="**/*.test.js" --parallel
+```
+
+
+## Create EasyTest config
+
+You can create EasyTest config to configure it to work. To create a config file, use the following command:
+
+```bash
+easytest --init
+```
+
+This will create a file named `easytest.json` in the current directory. You can then edit this file to configure EasyTest to your needs.

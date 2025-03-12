@@ -1,0 +1,71 @@
+---
+title: TypeScript Support
+description: TypeScript support in EasyTest
+slug: getting-started/typescript
+---
+
+import { Tabs, TabItem, Badge } from '@astrojs/starlight/components';
+
+EasyTest can be used with TypeScript and for TypeScript projects.
+
+## TypeScript Support
+
+To use EasyTest with `TypeScript` you need to install `tsx` (you can use another TypeScript compiler, but I recommend `tsx`) and `cross-env` packages:
+
+<Tabs>
+    <TabItem label="npm" icon="seti:npm">
+        ```bash
+        npm install -D tsx cross-env
+        ```
+    </TabItem>
+    <TabItem label="pnpm" icon="pnpm">
+        ```bash
+        pnpm -D install tsx cross-env
+        ```
+    </TabItem>
+    <TabItem label="yarm" icon="seti:yarn">
+        ```bash
+        yarn add -D tsx cross-env
+        ```
+    </TabItem>
+    <TabItem label="bun" icon="bun">
+        ```bash
+        bun add -D tsx cross-env
+        ```
+    </TabItem>
+</Tabs>
+
+## Update package.json
+
+Add the following command to your `package.json` file:
+
+```json
+{
+  "scripts": {
+    "test": "cross-env NODE_OPTIONS=\"--import tsx\" easytest"
+  }
+}
+```
+
+:::note
+`cross-env` - is a package that allows you to set environment variables in a cross-platform way.
+:::
+
+## Environment variable
+
+You can set the `NODE_OPTIONS` environment variable to use `tsx` as a TypeScript compiler. This will allow you to run your tests with `tsx` without having to specify it in the command line every time.
+
+### Linux / MacOS
+```bash
+export NODE_OPTIONS="--import tsx"
+```
+### Windows
+```bash
+set NODE_OPTIONS="--import tsx"
+```
+### PowerShell
+```powershell
+$env:NODE_OPTIONS="--import tsx"
+```
+
+
