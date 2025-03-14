@@ -16,7 +16,7 @@ export default defineConfig({
 				light: '/src/assets/favicon-black.svg',
 				dark: '/src/assets/favicon-white.svg',
 			},
-			favicon: '/src/assets/favicon-white.svg',
+			favicon: '/favicon.svg',
 			social: {
 				github: 'https://github.com/olton/latte',
 				discord: 'https://discord.gg/jpUJk8zc',
