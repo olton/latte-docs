@@ -1,16 +1,16 @@
 ---
 title: TypeScript Support
-description: TypeScript support in EasyTest
+description: TypeScript support in Latte
 slug: getting-started/typescript
 ---
 
 import { Tabs, TabItem, Badge } from '@astrojs/starlight/components';
 
-EasyTest can be used with TypeScript and for TypeScript projects.
+Latte can be used with TypeScript and for TypeScript projects.
 
 ## TypeScript Support
 
-To use EasyTest with `TypeScript` you need to install `tsx` (you can use another TypeScript compiler, but I recommend `tsx`) and `cross-env` packages:
+To use Latte with `TypeScript` you need to install `tsx` (you can use another TypeScript compiler, but I recommend `tsx`) and `cross-env` packages:
 
 <Tabs>
     <TabItem label="npm" icon="seti:npm">
@@ -42,7 +42,7 @@ Add the following command to your `package.json` file:
 ```json title="package.json"
 {
   "scripts": {
-    "test": "cross-env NODE_OPTIONS='--import tsx' easytest"
+    "test": "cross-env NODE_OPTIONS='--import tsx' latte"
   }
 }
 ```

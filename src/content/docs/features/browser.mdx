@@ -1,6 +1,6 @@
 ---
 title: Headless Browser
-description: Testing with headless browser in EasyTest
+description: Testing with headless browser in Latte
 slug: features/browser
 ---
 
@@ -13,10 +13,10 @@ We use [`Puppeteer`](https://pptr.dev/) to create a headless browser.
 
 ## Access to the Browser
 
-The `Browser` object is available in the global scope with `B` name. Also, you can import it from the `easytest` package.
+The `Browser` object is available in the global scope with `B` name. Also, you can import it from the `latte` package.
 
 ```js
-import { B } from "@olton/easytest";
+import { B } from "@olton/latte";
 
 beforeAll(async () => {
     await B.create();

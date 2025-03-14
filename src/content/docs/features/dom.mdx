@@ -1,17 +1,17 @@
 ---
 title: Testing DOM Elements
-description: Testing DOM elements with EasyTest
+description: Testing DOM elements with Latte
 slug: features/dom
 ---
 
-EasyTest has a built-in DOM object that allows you to test HTML elements in your tests (we use `happy-dom` to create one).
+Latte has a built-in DOM object that allows you to test HTML elements in your tests (we use `happy-dom` to create one).
 
 ## Enable DOM Support
 
 To enable DOM support, you need to set the `dom` option to `true` in the configuration file or use the `-d, --dom` option in the command line.
 
 ```bash
-easytest -d
+latte -d
 ```
 
 When you enabled DOM, global objects such as `window`, `document` and corresponding global methods and interfaces are created (for example `HTMLElement`).
@@ -44,7 +44,7 @@ describe(`Accordion tests`, () => {
 
 ## DOM Object
 
-EasyTest exports the `DOM` object that contains methods and properties for working with the DOM (also `DOM` available as a global object).
+Latte exports the `DOM` object that contains methods and properties for working with the DOM (also `DOM` available as a global object).
 
 ## CSS
 + `css` - scope, contains methods to load CSS files.
@@ -119,7 +119,7 @@ Object `DOM` has the following methods:
 + `waitFor(selector, timeout)` - waits for the element to be added to the document.
 
 ## Setup DOM
-EasyTest automatically sets up the DOM object before each test. But you can set up the DOM object manually. All setup options are optional.
+Latte automatically sets up the DOM object before each test. But you can set up the DOM object manually. All setup options are optional.
 
 ```js
 DOM.setup({

@@ -2,24 +2,23 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightThemeRapide from 'starlight-theme-rapide'
-import pkg from './package.json' ;
 import sidebar from "./sidebar.js"
 
 // https://astro.build/config
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: `EasyTest`,
+			title: `Latte`,
 			editLink: {
-				baseUrl: 'https://github.com/olton/easytest-doc/edit/master/',
+				baseUrl: 'https://github.com/olton/latte-docs/edit/master/',
 			},
 			logo: {
-				light: '/src/assets/exam-black.svg',
-				dark: '/src/assets/exam-white.svg',
+				light: '/src/assets/favicon-black.svg',
+				dark: '/src/assets/favicon-white.svg',
 			},
-			favicon: '/exam-white.svg',
+			favicon: '/src/assets/favicon-white.svg',
 			social: {
-				github: 'https://github.com/olton/easytest',
+				github: 'https://github.com/olton/latte',
 				discord: 'https://discord.gg/jpUJk8zc',
 			},
 			sidebar,

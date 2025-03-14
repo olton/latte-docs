@@ -1,10 +1,10 @@
 ---
 title: Custom Matchers
-description: Creating custom matchers in EasyTest
+description: Creating custom matchers in Latte
 slug: advanced/custom-matchers
 ---
 
-EasyTest provides a powerful way to create custom matchers, allowing you to extend the functionality of the built-in matchers to suit your specific testing needs. 
+Latte provides a powerful way to create custom matchers, allowing you to extend the functionality of the built-in matchers to suit your specific testing needs. 
 
 This is particularly useful when you want to encapsulate complex assertions or when you want to create reusable matchers for your test suite.
 
@@ -14,7 +14,7 @@ If you miss the built-in matchers, you can easily create your own by extending a
 To create a custom matcher, you can extend `Expect` class.
 
 ```js
-import {Expect} from "@olton/easytest";
+import {Expect} from "@olton/latte";
 
 class MyExpect extends Expect {
     toBeEven() {

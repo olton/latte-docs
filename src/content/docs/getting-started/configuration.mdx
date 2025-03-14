@@ -1,14 +1,14 @@
 ---
 title: Configuration
-description: Configuration options for EasyTest
+description: Configuration options for Latte
 slug: getting-started/configuration
 ---
 
-EasyTest created as a config-free testing framework. But you can configure it to your needs.
+Latte created as a config-free testing framework. But you can configure it to your needs.
 
 ## Default configuration
 
-EasyTest has a default configuration that is used when no other configuration is provided. This default configuration includes:
+Latte has a default configuration that is used when no other configuration is provided. This default configuration includes:
 
 ```json
 {
@@ -34,7 +34,7 @@ EasyTest has a default configuration that is used when no other configuration is
 You can override the default configuration using command line options. To see all available options, run the following command:
 
 ```bash
-easytest --help
+latte --help
 ```
 
 + `--version` - show version
@@ -51,27 +51,27 @@ easytest --help
 + `--report-file` - File to save the report
 + `--skip` - Patterns for tests to skip
 + `--test` - Test file to run
-+ `--init` - Create EasyTest config in the current directory
++ `--init` - Create Latte config in the current directory
 + `--help` - Show help
 
 ### Run tests
 You can run tests using the following command:
 
 ```bash
-easytest -d -w
+latte -d -w
 ```
 
 ```bash
-easytest --coverage --verbose --include="**/*.test.js" --parallel
+latte --coverage --verbose --include="**/*.test.js" --parallel
 ```
 
 
-## Create EasyTest config
+## Create Latte config
 
-You can create EasyTest config to configure it to work. To create a config file, use the following command:
+You can create Latte config to configure it to work. To create a config file, use the following command:
 
 ```bash
-easytest --init
+latte --init
 ```
 
-This will create a file named `easytest.json` in the current directory. You can then edit this file to configure EasyTest to your needs.
+This will create a file named `latte.json` in the current directory. You can then edit this file to configure Latte to your needs.

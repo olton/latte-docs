@@ -1,6 +1,6 @@
 ---
 title: JUnit Reporter
-description: Generating JUnit reports in EasyTest
+description: Generating JUnit reports in Latte
 slug: reporting/junit
 ---
 
@@ -11,21 +11,21 @@ The JUnit reporter generates a report in the JUnit XML format. This report can b
 To use the JUnit reporter, simply run your tests with the `--report-type=junit` options set. For example:
 
 ```bash
-easytest --coverage --report-type=junit
+latte --coverage --report-type=junit
 ```
 
 ## Report Directory
 This will generate a JUnit report in the `coverage` directory by default. You can specify a different output directory using the `--report-dir` option:
 
 ```bash
-easytest --coverage --report-type=junit --report-dir=reports
+latte --coverage --report-type=junit --report-dir=reports
 ```
 
 ## Report File
 You can also specify a custom report file name using the `--report-file` option. For example:
 
 ```bash
-easytest --coverage --report-type=junit --report-file=report.xml
+latte --coverage --report-type=junit --report-file=report.xml
 ```
 
 This will generate a JUnit report with the specified file name in the `coverage` directory. You can use this file to integrate test results into your CI/CD pipeline or share it with your team.

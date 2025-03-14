@@ -1,6 +1,6 @@
 ---
 title: HTML Reporter
-description: Generating HTML reports in EasyTest
+description: Generating HTML reports in Latte
 slug: reporting/html
 ---
 
@@ -11,7 +11,7 @@ The HTML reporter generates a detailed HTML report of your test results. This re
 To use the HTML reporter, simply run your tests with the `--report-type=html` options set. For example:
 
 ```bash
-easytest --coverage --report-type=html
+latte --coverage --report-type=html
 ```
 
 ## Report Directory
@@ -19,7 +19,7 @@ easytest --coverage --report-type=html
 This will generate an HTML report in the `coverage` directory by default. You can specify a different output directory using the `--report-dir` option:
 
 ```bash
-easytest --coverage --report-type=html --report-dir=reports
+latte --coverage --report-type=html --report-dir=reports
 ```
 
 ## Report File
@@ -27,7 +27,7 @@ easytest --coverage --report-type=html --report-dir=reports
 You can also specify a custom report file name using the `--report-file` option. For example:
 
 ```bash
-easytest --coverage --report-type=html --report-file=report.html
+latte --coverage --report-type=html --report-file=report.html
 ```
 
 This will generate an HTML report with the specified file name in the `coverage` directory. You can open this file in a web browser to view the detailed test results.

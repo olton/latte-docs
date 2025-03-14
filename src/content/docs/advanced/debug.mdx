@@ -1,6 +1,6 @@
 ---
 title: Debugging Tests
-description: Debugging tests in EasyTest
+description: Debugging tests in Latte
 slug: advanced/debug
 ---
 
@@ -13,7 +13,7 @@ To debug your tests in WebStorm, follow these steps:
 1. Open `Run/Debug Configurations` in WebStorm.
 2. Click on the `+` icon to add a new configuration.
 3. Select `Node.js` from the list.
-4. In the `File` field, add the following: `node_modules/@olton/easytest/cli/easytest.js`.
+4. In the `File` field, add the following: `node_modules/@olton/latte/cli/latte.js`.
 5. In the `Application parameters` field, add your enable debug option: `--debug`. If you need to pass any other parameters. For example: `--debug --dom`.
 6. In the `Working directory` field, set the path to your project directory.
 7. Click `OK` to save the configuration.
@@ -34,10 +34,10 @@ Now you can run the debugger by selecting the configuration you created and clic
 
 To debug your tests in VSC, follow these steps:
 
-1. Open the `Run and Debug` panel in VSC (Ctrl+Shift+D).
+1. Open the `Run and Debug` panel in VSC (Ctrl+Shift+).
 2. Click on `create a launch.json file`.
 3. Select `Node.js` from the list.
-4. In the `program` field, add the following: `${workspaceFolder}/node_modules/@olton/easytest/cli/easytest.js`.
+4. In the `program` field, add the following: `${workspaceFolder}/node_modules/@olton/latte/cli/latte.js`.
 5. In the `args` field, add your enable debug option: `--debug`. If you need to pass any other parameters. For example: `--debug --dom`.
 6. In the `cwd` field, set the path to your project directory.
 7. Click `OK` to save the configuration.
@@ -52,7 +52,7 @@ To debug your tests in VSC, follow these steps:
             "type": "node",
             "request": "launch",
             "name": "Debugging Tests",
-            "program": "${workspaceFolder}/node_modules/@olton/easytest/cli/easytest.js",
+            "program": "${workspaceFolder}/node_modules/@olton/latte/cli/latte.js",
             "args": ["--debug"],
             "cwd": "${workspaceFolder}"
         }

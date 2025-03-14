@@ -49,10 +49,10 @@ export default [
     {
         label: "Resources",
         items: [
-            {label: "EasyTest", link: "https://github.com/olton/easytest"},
-            {label: "Docs", link: "https://github.com/olton/easytest-docs"},
-            {label: "Contributing", link: "https://github.com/olton/easytest"},
-            {label: "License", link: "https://github.com/olton/easytest/blob/master/LICENSE"},
+            {label: "Latte", link: "https://github.com/olton/latte"},
+            {label: "Docs", link: "https://github.com/olton/latte-docs"},
+            {label: "Contributing", link: "https://github.com/olton/latte"},
+            {label: "License", link: "https://github.com/olton/latte/blob/master/LICENSE"},
             {label: "Metro UI", link: "https://metroui.org.ua"},
             {label: "Panda Templates", link: "https://panda.metroui.org.ua"},
             {label: "Author", link: "https://pimenov.com.ua"}
