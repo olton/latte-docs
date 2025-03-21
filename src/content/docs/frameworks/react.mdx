@@ -11,7 +11,7 @@ This guide will help you set up Latte and run your first test for a React compon
 
 ## ![](../../../assets/React.svg) Testing React Components
 
-To enable React environment in Latte, you need to set `--dom` abd `--react` options to test run command.
+To enable React environment in Latte, you need to set `--react` option. You can use `jsx` syntax in your tests.
 
 ```bash
 latte --dom --react
@@ -27,71 +27,46 @@ You can use JSX syntax in your tests, but you need to transpile it first.
 
 ## Requirements
 
-+ You must have `React` installed.
-+ You must have `transplitter` installed (We recommended [Babel](https://babeljs.io/)).
++ You must have `React` installed (https://react.dev).
++ You must have `tsx` installed (https://tsx.is).
 
 ## Installing React
 
 <Tabs>
     <TabItem label="npm" icon="seti:npm">
         ```bash
-        npm install react react-dom
+        npm install react react-dom tsx
         ```
     </TabItem>
     <TabItem label="pnpm" icon="pnpm">
         ```bash
-        pnpm install react react-dom
+        pnpm install react react-dom tsx
         ```
     </TabItem>
     <TabItem label="yarm" icon="seti:yarn">
         ```bash
-        yarn add react react-dom
+        yarn add react react-dom tsx
         ```
     </TabItem>
     <TabItem label="bun" icon="bun">
         ```bash
-        bun add react react-dom
+        bun add react react-dom tsx
         ```
     </TabItem>
 </Tabs>
 
-## ![Babel](../../../assets/Babel.svg) Installing Transpiler
+## Update package.json
+Add the following command to your `package.json` file:
 
-<Tabs>
-    <TabItem label="npm" icon="seti:npm">
-        ```bash
-        npm install -D @babel/core @babel/preset-env @babel/preset-react @babel/preset-typescript
-        ```
-    </TabItem>
-    <TabItem label="pnpm" icon="pnpm">
-        ```bash
-        pnpm -D install @babel/core @babel/preset-env @babel/preset-react @babel/preset-typescript
-        ```
-    </TabItem>
-    <TabItem label="yarn" icon="seti:yarn">
-        ```bash
-        yarn add -D @babel/core @babel/preset-env @babel/preset-react @babel/preset-typescript
-        ```
-    </TabItem>
-    <TabItem label="bun" icon="bun">
-        ```bash
-        bun add -D @babel/core @babel/preset-env @babel/preset-react @babel/preset-typescript
-        ```
-    </TabItem>
-</Tabs>
-
-## Create Babel Configuration
-Create a new file named `.babelrc` in your project directory and add the following code:
-
-```json title=".babelrc"
+```json title="package.json"
 {
-    "presets": [
-        "@babel/preset-env",
-        "@babel/preset-react",
-        "@babel/preset-typescript"
-    ]
+  "scripts": {
+    "test": "NODE_OPTIONS=\"--import tsx\" latte --dom --react"
+  }
 }
 ```
+
+Read about tsx [here](/getting-started/typescript).
 
 ## Write your React test
 
@@ -130,6 +105,10 @@ describe('React Button (JSX)', () => {
 ```
 
 ## React Tools
+
+:::tip
+The React Tools are activated when you run Latte with the `--react` option.
+:::
 
 Latte provides a set of tools to help you test your React components.
 When you run your tests, Latte will automatically detect the React environment and provide you with the following tools in the `R` object:

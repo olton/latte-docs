@@ -8,56 +8,76 @@ import { Tabs, TabItem, Badge } from '@astrojs/starlight/components';
 
 Latte can be used with TypeScript and for TypeScript projects.
 
-## ![Babel](../../../assets/TypeScript.svg) TypeScript Support
+## ![TypeScript](../../../assets/TypeScript.svg) TypeScript Support
 
-To use Latte with `TypeScript` you need to install `babel`:
+To use Latte with `TypeScript` you need to install `tsx` (https://tsx.is):
 
 <Tabs>
     <TabItem label="npm" icon="seti:npm">
         ```bash
-        npm install -D @babel/core @babel/preset-env @babel/preset-typescript
+        npm install -D tsx
         ```
     </TabItem>
     <TabItem label="pnpm" icon="pnpm">
         ```bash
-        pnpm -D install @babel/core @babel/preset-env @babel/preset-typescript
+        pnpm -D install tsx
         ```
     </TabItem>
     <TabItem label="yarn" icon="seti:yarn">
         ```bash
-        yarn add -D @babel/core @babel/preset-env @babel/preset-typescript
+        yarn add -D tsx
         ```
     </TabItem>
     <TabItem label="bun" icon="bun">
         ```bash
-        bun add -D @babel/core @babel/preset-env @babel/preset-typescript
+        bun add -D tsx
         ```
     </TabItem>
 </Tabs>
 
-## Create Babel Configuration
-Create a new file named `.babelrc` in your project directory and add the following code:
+### Change test command
 
-```json title=".babelrc"
+```json title="package.json"
 {
-    "presets": [
-        "@babel/preset-env",
-        "@babel/preset-typescript"
-    ]
+  "scripts": {
+    "test": "NODE_OPTIONS=\"--import tsx\" latte --ts"
+  }
 }
 ```
 
-## Create your first test
-Create a new file named `example.test.ts` in your project directory and add the following code:
+### ![Windows](../../../assets/Windows.svg) Windows
 
-```ts title="example.test.ts"
-function hello(): string {
-    return "Hello"
+If you're using Windows, we recommended to use `cross-env` package to set environment variables:
+
+<Tabs>
+    <TabItem label="npm" icon="seti:npm">
+        ```bash
+        npm install -D cross-env
+        ```
+    </TabItem>
+    <TabItem label="pnpm" icon="pnpm">
+        ```bash
+        pnpm -D install cross-env
+        ```
+    </TabItem>
+    <TabItem label="yarn" icon="seti:yarn">
+        ```bash
+        yarn add -D cross-env
+        ```
+    </TabItem>
+    <TabItem label="bun" icon="bun">
+        ```bash
+        bun add -D cross-env
+        ```
+    </TabItem>
+</Tabs>
+
+And then change your test command to:
+
+```json title="package.json"
+{
+  "scripts": {
+    "test": "cross-env NODE_OPTIONS=\"--import tsx\" latte"
+  }
 }
-
-describe(`Common tests suite`, () => {
-    it(`says hello`, () => {
-        return expect(hello()).toBe("Hello")
-    })
-})
 ```

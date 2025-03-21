@@ -8,53 +8,66 @@ Latte created as a config-free testing framework. But you can configure it to yo
 
 ## Default configuration
 
-Latte has a default configuration that is used when no other configuration is provided. This default configuration includes:
+Latte has a default configuration used when no other configuration is provided. 
+This default configuration includes:
 
 ```json
 {
-    "include": ["**/*.{spec,test}.{t,j}s", "**/*.{spec,test}.{ts,js}x"],
+    "include": ["**/*.{test,spec}.{js,ts,jsx,tsx}"],
     "exclude": ["node_modules/**"],
-    "skip": "",
-    "test": "",
     "verbose": false,
     "dom": false,
+    "react": false,
+    "ts": false,
     "coverage": false,
-    "skipPassed": false,
-    "reportType": "lcov",
+    "parallel": false,
+    "watch": false,
+    "debug": false,
+    "skip": "",
+    "test": "",
+    "reportType": "console",
     "reportDir": "coverage",
     "reportFile": "",
-    "parallel": false,
     "maxWorkers": 4,
-    "watch": false
+    "progress": "default"
 }
 ```
 
+You can override the default configuration using command line options or create a config file named `latte.json`.
+
 ## CLI options
 
-You can override the default configuration using command line options. To see all available options, run the following command:
+You can use CLI options to override defaults. To see all available options, run the following command:
 
 ```bash
 latte --help
 ```
 
+### Available options
+
 + `--version` - show version
-+ `-w`, `--watch` - Run in watch mode
-+ `-p`, `--parallel` - Run tests in parallel
-+ `-d`, `--dom` - Enable DOM support
-+ `-v`, `--verbose` - Enable verbose mode
-+ `-c`, `--coverage` - Enable coverage
-+ `--max-workers` - Maximum number of workers to use in parallel mode
++ `--ts` - Enable TypeScript support
 + `--include` - Patterns for test files
 + `--exclude` - Patterns for files to exclude
-+ `--report-type` - Type of report to generate ['lcov', 'html', 'junit']
++ `-w`, `--watch` – Run in watch mode
++ `-p`, `--parallel` – Run tests in parallel
++ `-d`, `--dom` – Enable DOM support
++ `-r`, `--react` – Enable React support
++ `-v`, `--verbose` – Enable verbose mode
++ `-c`, `--coverage` – Enable coverage
++ `-g`, `--debug` – Enable debug mode
++ `-l`, `--loader` – Enable experimental
++ `--max-workers` - Maximum number of workers to use in parallel mode
++ `--report-type` - Type of report to generate [`lcov`, `html`, `junit`]
 + `--report-dir` - Directory to save the report
 + `--report-file` - File to save the report
 + `--skip` - Patterns for tests to skip
-+ `--test` - Test file to run
++ `--test` - Test name to run
++ `--progress` - Progress bar type [`default`, `dots`, `bar`]
 + `--init` - Create Latte config in the current directory
 + `--help` - Show help
 
-### Run tests
+### Example to Run tests
 You can run tests using the following command:
 
 ```bash
@@ -75,3 +88,9 @@ latte --init
 ```
 
 This will create a file named `latte.json` in the current directory. You can then edit this file to configure Latte to your needs.
+
+## Automatic options enabling
+
+Latte will automatically enable options based on the test files in your project. 
+For example, if you have a file with extension `.jsx` or `.tsx`, Latte will automatically enable the `--dom` and `--react` options.
+If you have a file with `.ts` extension, Latte will automatically enable the `--ts` option.
