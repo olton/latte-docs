@@ -8,64 +8,56 @@ import { Tabs, TabItem, Badge } from '@astrojs/starlight/components';
 
 Latte can be used with TypeScript and for TypeScript projects.
 
-## TypeScript Support
+## ![Babel](../../../assets/TypeScript.svg) TypeScript Support
 
-To use Latte with `TypeScript` you need to install `tsx` (you can use another TypeScript compiler, but I recommend `tsx`) and `cross-env` packages:
+To use Latte with `TypeScript` you need to install `babel`:
 
 <Tabs>
     <TabItem label="npm" icon="seti:npm">
         ```bash
-        npm install -D tsx cross-env
+        npm install -D @babel/core @babel/preset-env @babel/preset-typescript
         ```
     </TabItem>
     <TabItem label="pnpm" icon="pnpm">
         ```bash
-        pnpm -D install tsx cross-env
+        pnpm -D install @babel/core @babel/preset-env @babel/preset-typescript
         ```
     </TabItem>
-    <TabItem label="yarm" icon="seti:yarn">
+    <TabItem label="yarn" icon="seti:yarn">
         ```bash
-        yarn add -D tsx cross-env
+        yarn add -D @babel/core @babel/preset-env @babel/preset-typescript
         ```
     </TabItem>
     <TabItem label="bun" icon="bun">
         ```bash
-        bun add -D tsx cross-env
+        bun add -D @babel/core @babel/preset-env @babel/preset-typescript
         ```
     </TabItem>
 </Tabs>
 
-## Update package.json
+## Create Babel Configuration
+Create a new file named `.babelrc` in your project directory and add the following code:
 
-Add the following command to your `package.json` file:
-
-```json title="package.json"
+```json title=".babelrc"
 {
-  "scripts": {
-    "test": "cross-env NODE_OPTIONS='--import tsx' latte"
-  }
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-typescript"
+    ]
 }
 ```
 
-:::note
-`cross-env` - is a package that allows you to set environment variables in a cross-platform way.
-:::
+## Create your first test
+Create a new file named `example.test.ts` in your project directory and add the following code:
 
-## Environment variable
+```ts title="example.test.ts"
+function hello(): string {
+    return "Hello"
+}
 
-You can set the `NODE_OPTIONS` environment variable to use `tsx` as a TypeScript compiler. This will allow you to run your tests with `tsx` without having to specify it in the command line every time.
-
-### Linux / MacOS
-```bash
-export NODE_OPTIONS="--import tsx"
+describe(`Common tests suite`, () => {
+    it(`says hello`, () => {
+        return expect(hello()).toBe("Hello")
+    })
+})
 ```
-### Windows
-```bash
-set NODE_OPTIONS="--import tsx"
-```
-### PowerShell
-```powershell
-$env:NODE_OPTIONS="--import tsx"
-```
-
-
