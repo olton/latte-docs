@@ -24,6 +24,19 @@ test(`Common tests suite`, () => {
 })
 ```
 
+## Negative Tests
+If you want to check that the value is not equal to the expected value, you can use the `not` modifier:
+
+```js
+expect(value).not.toBe(expectedValue)
+```
+
+:::note
+The `not` modifier can be used with ALL matcher to check for negative conditions.
+:::
+
+
+---
 ## Base 
 
 ### toBe()
@@ -31,32 +44,17 @@ test(`Common tests suite`, () => {
 
 Asserts that the actual value is equal to the expected value. Matcher uses the `Object.is()` method to compare values.
 
-### toBeNot()
-`toBeNot(expected, msg?: string)`
-
-Asserts that the actual value is not equal to the expected value. Matcher uses the `Object.is()` method to compare values.
-
 ### toBeStrictEqual()
 `toBeStrictEqual(expected, msg?: string)`
 
 Asserts that the actual value is strict equal (uses `===`) to the expected value.
-
-### toBeNotStrictEqual()
-`toBeNotStrictEqual(expected, msg?: string)`
-
-Asserts that the actual value isn't strict equal (uses `!==`) to the expected value.
 
 ### toBeEqual()
 `toBeEqual(expected, msg?: string)`
 
 Asserts that the actual value is equal (uses `==`) to the expected value.
 
-### toBeNotEqual()
-`toBeNotEqual(expected, msg?: string)`
-
-Asserts that the actual value is not equal (uses `!=`) to the expected value.
-
-
+---
 ## Array 
 
 ### toBeArrayEqual()
@@ -74,40 +72,20 @@ Asserts that the actual value is an array.
 
 Asserts that the actual value is sorted.
 
-### toBeArrayNotSorted()
-`toBeArrayNotSorted(msg?: string)`
-
-Asserts that the actual value is not sorted.
-
 ### toBeArrayUnique()
 `toBeArrayUnique(msg?: string)`
 
 Asserts that values in the array are unique.
-
-### toBeArrayNotUnique()
-`toBeArrayNotUnique(msg?: string)`
-
-Asserts that values in the array aren't unique.
 
 ### toContain()
 `toContain(expected, msg?: string)`
 
 Asserts that the actual value contains the expected value.
 
-### toNotContain()
-`toNotContain(expected, msg?: string)`
-
-Asserts that the actual value does not contain the expected value.
-
 ### toBeEmpty()
 `toBeEmpty(msg?: string)`
 
 Asserts that the actual value is empty.
-
-### toBeNotEmpty()
-`toBeNotEmpty(msg?: string)`
-
-Asserts that the actual value is not empty.
 
 ### hasLength()
 `hasLength(expected, msg?: string)`
@@ -119,6 +97,7 @@ Asserts that the array-like object has the expected length.
 
 Asserts that the actual value is an ArrayBuffer.
 
+---
 ## Async
 
 ### toBeResolvedWith()
@@ -126,6 +105,7 @@ Asserts that the actual value is an ArrayBuffer.
 
 Asserts that the actual promise resolves with the expected value.
 
+---
 ## Color 
 
 ### toBeHEXColor()
@@ -168,11 +148,7 @@ Asserts that the actual value is a CMYK color.
 
 Asserts that the actual value is a valid color (HEX, RGB, RGBA, HSV, HSL, HSLA, or CMYK).
 
-### toBeNotColor()
-`toBeNotColor(msg?: string)`
-
-Asserts that the actual value is not a valid color (HEX, RGB, RGBA, HSV, HSL, HSLA, or CMYK).
-
+---
 ## Html 
 
 ### toBeHtmlElement()
@@ -210,18 +186,8 @@ Asserts that the actual value is a Text node.
 
 Asserts that the HTML element has the specified class.
 
-### hasNoClass()
-`hasNoClass(expected, msg?: string)`
-
-Asserts that the HTML element has the specified class.
-
 ### hasAttribute()
 `hasAttribute(expected, msg?: string)`
-
-Asserts that the HTML element has the specified attribute.
-
-### hasNoAttribute()
-`hasNoAttribute(expected, msg?: string)`
 
 Asserts that the HTML element has the specified attribute.
 
@@ -230,21 +196,22 @@ Asserts that the HTML element has the specified attribute.
 
 Asserts that the HTML element has children.
 
-### hasNoChildren()
-`hasNoChildren(msg?: string)`
-
-Asserts that the HTML element has children.
-
 ### hasParent()
 `hasParent(msg?: string)`
 
 Asserts that the HTML element has a parent.
 
-### hasNoParent()
-`hasNoParent(msg?: string)`
+### hasStyleProperty()
+`hasStyleProperty(prop, val, msg?: string)`
 
-Asserts that the HTML element has no parent.
+Asserts that the HTML element has the specified style property.
 
+### hasStyles()
+`hasStyles(styles: object, msg?: string)`
+
+Asserts that the HTML element has the specified styles.
+
+---
 ## Mock 
 
 ### toHaveBeenCalled()
@@ -267,6 +234,7 @@ Asserts that the mock function was called with specified arguments.
 
 Asserts that the mock function was called last with specified arguments.
 
+---
 ## Object 
 
 ### toBeObject()
@@ -294,12 +262,7 @@ Asserts that the actual structure is equal to the expected structure.
 
 Asserts that the actual value has the specified property.
 
-### hasNoProperty()
-`hasNoProperty(expected, msg?: string)`
-
-Asserts that the actual value has not the specified property.
-
-
+---
 ## Throw 
 
 ### toThrow()
@@ -399,18 +362,8 @@ Asserts that the actual value is NaN.
 
 Asserts that the actual value is an integer.
 
-### toBeNotInteger()
-`toBeNotInteger(msg?: string)`
-
-Asserts that the actual value is an integer.
-
 ### toBeSafeInteger()
 `toBeSafeInteger(msg?: string)`
-
-Asserts that the actual value is a safe integer.
-
-### toBeNotSafeInteger()
-`toBeNotSafeInteger(msg?: string)`
 
 Asserts that the actual value is a safe integer.
 
@@ -439,11 +392,6 @@ Asserts that the actual value is undefined.
 
 Asserts that the actual value is null.
 
-### toBeNotNull()
-`toBeNotNull(msg?: string)`
-
-Asserts that the actual value is not null.
-
 ### toBePromise()
 `toBePromise(msg?: string)`
 
@@ -459,6 +407,7 @@ Asserts that the actual value is a JSON string.
 
 Asserts that the actual value is an XML string.
 
+---
 ## Validator 
 
 ### toBeBase64()
@@ -470,11 +419,6 @@ Asserts that the actual value is a Base64 encoded string.
 `toBeIP(msg?: string)`
 
 Asserts that the actual value is a valid IP address.
-
-### toBeNotIP()
-`toBeNotIP(msg?: string)`
-
-Asserts that the actual value isn't a valid IP address.
 
 ### toBeIPv4()
 `toBeIPv4(msg?: string)`
@@ -546,11 +490,6 @@ Asserts that the actual value is between the specified minimum and maximum value
 `toMatch(expected, msg?: string)`
 
 Asserts that the actual value matches the expected `RegExp` pattern.
-
-### toNotMatch()
-`toNotMatch(expected, msg?: string)`
-
-Asserts that the actual value doesn't match to the expected `RegExp` pattern.
 
 ### toBeTrue()
 `toBeTrue(msg?: string)`
