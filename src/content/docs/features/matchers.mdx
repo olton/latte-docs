@@ -4,19 +4,32 @@ description: Built-in matchers in Latte
 slug: features/matchers
 ---
 
-Latte provides a set of built-in matchers that can be used to assert conditions in your tests. These matchers are designed to be easy to use and understand, making it simple to write clear and concise test cases.
+import Leader from '../../../components/Leader.astro';
 
-To use a matcher, you need to call expect, which will return an instance of Expect, which, in turn, will make it possible to call the corresponding matcher on the specified value:
+<Leader content="Latte provides a set of built-in matchers that can be used to assert conditions in your tests. These matchers are designed to be easy to use and understand, making it simple to write clear and concise test cases." />
 
-```js
+To use a matcher, you need to call `expect`, which will return an instance of `Expect`, which, in turn, will make it possible to call the corresponding `matcher` on the specified value. 
+
+You can use the matcher in two ways:
+
+```js title="Positive test"
 expect(value).toBe(expectedValue)
+```
+
+```js title="Negative test"
+expect(value).not.toBe(expectedValue)
 ```
 
 :::tip
 The matcher will check if the value is equal to the expected value. If it is, the test will pass; otherwise, it will fail.
 :::
 
-If in expect you pass the value to be tested, then in matcher you specify a control value that must either match the value being tested or not. Also in matcher you can pass your custom error message.
+## Positive Tests
+
+By default, the matcher checks if the value is equal to the expected value (**positive test**). If it is, the test will pass; otherwise, it will fail.
+
+If in `expect` you pass the value to be tested, then in `matcher` you specify a control value that must either match the value being tested or not. 
+Also, in the matcher, you can pass your **custom error message**.
 
 ```js
 test(`Common tests suite`, () => {
@@ -210,6 +223,37 @@ Asserts that the HTML element has the specified style property.
 `hasStyles(styles: object, msg?: string)`
 
 Asserts that the HTML element has the specified styles.
+
+### hasSiblings()
+
+`hasSiblings(msg?: string)`
+
+Asserts that the HTML element has siblings.
+
+### hasSibling()
+
+`hasSibling(expected: HTMLElement, msg?: string)`
+
+Asserts that the HTML element has a sibling with the specified value.
+
+### hasPrev() 
+
+`hasPrev(msg?: string)`
+
+Asserts that the HTML element has a previous sibling.
+
+### hasNext()
+
+`hasNext(msg?: string)`
+
+Asserts that the HTML element has a next sibling.
+
+### hasText()
+
+`hasText(expected, msg?: string)`
+
+Asserts that the HTML element has the specified text.
+
 
 ---
 ## Mock 
