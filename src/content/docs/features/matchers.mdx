@@ -215,7 +215,12 @@ Asserts that the HTML element has children.
 Asserts that the HTML element has a parent.
 
 ### hasStyleProperty()
-`hasStyleProperty(prop, val, msg?: string)`
+`hasStyleProperty(expected, msg?: string)`
+
+Asserts that the HTML element has the specified style in style property.
+
+### hasStyle()
+`hasStyle(prop, val, msg?: string)`
 
 Asserts that the HTML element has the specified style property.
 
@@ -254,6 +259,17 @@ Asserts that the HTML element has a next sibling.
 
 Asserts that the HTML element has the specified text.
 
+### containsElement()
+
+`containsElement(expected, msg?: string)`
+
+Asserts that the HTML element contains the specified element.
+
+### containsElementDeep()
+
+`containsElementDeep(expected, msg?: string)`
+
+Asserts that the HTML element contains the specified element deeply.
 
 ---
 ## Mock 
