@@ -40,3 +40,146 @@ test('forEach calls callback', () => {
   expect(mockCallback).toHaveBeenCalledWith(0);
 });
 ```
+
+## fn.mock property
+
+The `mock()` function returns a mock function with a `mock` property
+that contains information about how the function has been called and what the function returned is kept.
+The `.mock` property also tracks the value of `this` for each call.
+
+```js
+mock = {
+    calls: [],
+    contexts: [],
+    returnValues: [],
+    implementations: {
+        once: []
+    },
+    implementation: null,
+    results: []
+}
+```
+
+## Return Values
+The `mock` property contains the return values of the mock function.
+You can set the return value of the mock function by using `mockReturnValue(value)`.
+
+```js
+test("Pass test value to mock function", () => {
+    const mockFn = mock().mockReturnValue(42);
+    expect(mockFn()).toBe(42);
+});
+```
+
+## Mock Implementation
+
+There are cases where it is useful to go beyond the ability to specify return values and full-on replace the implementation of a mock function.
+This can be done with `mock` or the `mockImplementationOnce`, or `mockImplementation` method on mock functions.
+
+```js
+test('should return specified value once', () => {
+    const mockFn = mock().mockImplementationOnce(() => 42);
+    expect(mockFn()).toBe(42);
+    expect(mockFn()).toBeUndefined();
+})
+```
+
+```js
+test('should return specified value', () => {
+    const mockFn = mock().mockImplementation(() => 42);
+    expect(mockFn()).toBe(42);
+    expect(mockFn()).toBe(42);
+})
+```
+
+```js
+test('should return specified value', () => {
+    const mockFn = mock((a, b) => a + b);
+    expect(mockFn(1, 2)).toBe(3);
+    expect(mockFn("Hello", " World!")).toBe("Hello World!");
+})
+```
+
+## Mocking Promises
+
+You can also mock a function that returns a promise.
+
+```js
+describe('mocking promises', () => {
+    it('should resolve with specified value', async () => {
+        const mockFn = mock().mockResolvedValue('resolved');
+        await expect(mockFn()).toBeResolvedWith('resolved');
+    });
+
+    it('should reject with specified error', async () => {
+        const mockFn = mock().mockRejectedValue('rejected');
+        await expect(mockFn()).toBeRejectedWith('rejected');
+    });
+})
+```
+
+## Context
+The `mock` property also tracks the value of `this` for each call.
+
+```js
+test('should track call contexts', () => {
+    const context1 = { a: 1 };
+    const context2 = { b: 2 };
+    const mockFn = mock();
+    mockFn.call(context1);
+    mockFn.call(context2);
+    expect(mockFn.mock.contexts).toBeArrayEqual([context1, context2]);
+});
+```
+
+## Reset
+
+Resetting the state of a mock function is important to ensure that tests are isolated and don't affect each other.
+You can reset the state of a mock function by calling `mockFn.mockReset()`. 
+This will clear all calls, contexts, return values, and implementations.
+
+```js
+test('should reset mock function', () => {
+    const mockFn = mock().mockReturnValue(42);
+    mockFn();
+    mockFn.mockReset();
+    expect(mockFn.mock.calls.length).toBe(0);
+    expect(mockFn.mock.contexts.length).toBe(0);
+    expect(mockFn()).toBeUndefined();
+});
+```
+
+## Tracking results
+You can track the results of a mock function by using the `mock.results` property.
+
+```js
+describe('Tracking results', () => {
+    it('should track results', () => {
+        const mockFn = mock()
+            .mockReturnValue(42)
+            .mockImplementationOnce(() => { throw new Error('test error'); });
+
+        expect(mockFn()).toBe(42);
+
+        try {
+            mockFn();
+        } catch (e) {
+            // The error is caught
+        }
+
+        expect(mockFn.mock.results[0]).toBeObject({ type: 'return', value: 42 });
+        expect(mockFn.mock.results[1]).toBeObject({ type: 'throw', value: 'test error' });
+    });
+})
+```
+
+## Naming
+
+You can name a mock function by passing a name as the second argument to the `mock()` factory.
+This will improve the readability of errors and call stacks when testing, especially when using multiple mock functions at the same time.
+
+```js
+const mockFn = mock(() => {}, 'myMockFunction')
+
+console.log(mockFn.name) // myMockFunction
+```

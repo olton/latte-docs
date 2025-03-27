@@ -118,6 +118,10 @@ Asserts that the actual value is an ArrayBuffer.
 
 Asserts that the actual promise resolves with the expected value.
 
+### toBeRejectedWith()
+`toBeRejectedWith(expected, msg?: string)`
+Asserts that the actual promise rejects with the expected value.
+
 ---
 ## Color 
 
@@ -270,6 +274,23 @@ Asserts that the HTML element contains the specified element.
 `containsElementDeep(expected, msg?: string)`
 
 Asserts that the HTML element contains the specified element deeply.
+
+### hasId()
+`hasId(expected, msg?: string)`
+Asserts that the HTML element has the specified id.
+
+### hasName()
+`hasName(expected, msg?: string)`
+Asserts that the HTML element has the specified name.
+
+### hasHref()
+`hasHref(expected, msg?: string)`
+Asserts that the HTML element has the specified href.
+
+### hasSrc()
+`hasSrc(expected, msg?: string)`
+Asserts that the HTML element has the specified src.
+
 
 ---
 ## Mock 
