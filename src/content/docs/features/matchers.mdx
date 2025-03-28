@@ -48,6 +48,16 @@ expect(value).not.toBe(expectedValue)
 The `not` modifier can be used with ALL matcher to check for negative conditions.
 :::
 
+## Chaining Matchers
+You can chain multiple matchers together to create more complex assertions. For example:
+
+```js
+expect(value)
+    .toBeDefined()
+    .toBeType('string')
+    .toBe(expectedValue)
+```
+
 
 ---
 ## Base 
@@ -582,5 +592,48 @@ Asserts that the actual value is `true`.
 
 Asserts that the actual value is `false`.
 
+## Accessibility (a11y)
+
+### hasAriaAttribute()
+`hasAriaAttribute(expected, msg?: string)`
+Asserts that the HTML element has the specified ARIA attribute.
+
+### hasAriaAttributes()
+`hasAriaAttributes(expected, msg?: string)`
+Asserts that the HTML element has the specified ARIA attributes. `expected` is a space-separated string of attributes.
+
+### hasAriaRole()
+`hasAriaRole(expected, msg?: string)`
+Asserts that the HTML element has the specified ARIA role.
+
+### hasAriaLabel()
+`hasAriaLabel(expected, msg?: string)`
+Asserts that the HTML element has the specified ARIA label.
+
+### hasAltText()
+`hasAltText(msg?: string)`
+Asserts that the HTML element has the specified alt text.
+
+### toBeKeyboardAccessible()
+`toBeKeyboardAccessible(msg?: string)`
+
+## React
+
+### toRenderWithoutError()
+`toRenderWithoutError(msg?: string)`
+
+Asserts that the React component renders without throwing an error.
+
+### toRenderText()
+`toRenderText(expected, msg?: string)`
+Asserts that the React component renders with the specified text.
+
+### toContainElement()
+`toContainElement(expected, msg?: string)`
+Asserts that the React component contains the specified element.
+
+### toHaveElementCount()
+`toHaveElementCount(expected, msg?: string)`
+Asserts that the React component has the specified number of elements.
 
 

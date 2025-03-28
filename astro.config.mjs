@@ -8,7 +8,7 @@ import sidebar from "./sidebar.js"
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: `Latte v0.8.0`,
+			title: `Latte v0.9.0`,
 			editLink: {
 				baseUrl: 'https://github.com/olton/latte-docs/edit/master/',
 			},

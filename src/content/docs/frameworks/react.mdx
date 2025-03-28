@@ -17,8 +17,8 @@ To enable React environment in Latte, you need to set `--react` option. You can 
 latte --dom --react
 ```
 
-After that you have access to globals `React`, `ReactDOM`, `ReactTestUtils` (if installed), and you can write your tests using the `React Tools` as `R` object,
-which provides a set of tools to help you test your React components.
+After that you have access to globals `React` and `ReactDOM`, and you can write your tests using the `React Tools` as `R` object,
+which provides a set of tools to help you test your React components or use `React` matchers.
 
 
 :::tip
@@ -68,7 +68,7 @@ Add the following command to your `package.json` file:
 
 Read about tsx [here](/getting-started/typescript).
 
-## Write your React test
+## Write your first React test
 
 Create a new file named `react.test.jsx` in your project directory and add the following code:
 
@@ -85,21 +85,7 @@ describe('React Button (JSX)', () => {
     it('should render a button with text', async () => {
         const { container } = await R.render(<Button text="Click me" />);
         const button = container.querySelector('button');
-        expect(button).toBeHtmlElement();
-        expect(button.textContent).toBe('Click me');
-    });
-
-    it('should handle click events', async () => {
-        let clicked = false;
-        const handleClick = () => {
-            clicked = true;
-        };
-        const { container } = await R.render(<Button text="Click me" onClick={handleClick} />);
-        await waitFor(100);
-        const button = container.querySelector('button');
-        expect(button).toBeHtmlElement();
-        button.click();
-        expect(clicked).toBeTrue();
+        expect(button).toBeHtmlElement().hasText('Click me');
     });
 });
 ```
@@ -140,11 +126,19 @@ When you run your tests, Latte will automatically detect the React environment a
 
 ### R.fireEvent
 
-To use `R.fireEvent`, you need adding `react-dom/test-utils` to your project:
+`R.fireEvent` is a function that simulates events on the rendered component. `R.fireEvent` includes next methods:
 
-```bash
-npm install -D react-dom/test-utils
-```
+- `click(element)`: Simulates a click event on the specified element.
+- `change(element, value)`: Simulates a change event on the specified element.
+- `focus(element)`: Simulates a focus event on the specified element.
+- `blur(element)`: Simulates a blur event on the specified element.
+- `keydown(element, key)`: Simulates a keydown event on the specified element.
+- `keyup(element, key)`: Simulates a keyup event on the specified element.
+- `keypress(element, key)`: Simulates a keypress event on the specified element.
+- `submit(element)`: Simulates a submit event on the specified element.
+- `ivalid(element)`: Simulates an invalid event on the specified element.
+- `reset(element)`: Simulates a reset event on the specified element.
+- `select(element)`: Simulates a select event on the specified element.
 
 Then you can use `R.fireEvent` to simulate events on the rendered component:
 
@@ -164,4 +158,68 @@ describe('React Button (JSX)', () => {
         expect(clicked).toBeTrue();
     });
 });
+```
+
+## React Matchers
+
+Latte provides a set of matchers to test your React components. 
+You must use React matchers with `react` getter.
+Getter `react` checks if `React` and `ReactDOM` are installed in your project.
+
+### toRenderWithoutError()
+
+`toRenderWithoutError(msg)` is a matcher that checks if the component renders without throwing an error.
+
+```js title="react.test.jsx"
+describe('Rendering React Components', () => {
+    it('should render without error', async () => {
+        expect(<Button text="Click me" />).react.toRenderWithoutError();
+    });
+})
+```
+
+### toRenderText()
+`toRenderText(text, msg)` is a matcher that checks if the component renders with the specified text.
+
+```js title="react.test.jsx"
+describe('Rendering React Components', () => {
+    it('should render with text', async () => {
+        await expect(<Button text="Click me" />).react.toRenderText('Click me');
+    });
+})
+```
+
+### toContainElement()
+`toContainElement(selector, msg)` is a matcher that checks if the specified component exists after rendering.
+
+```js title="react.test.jsx"
+describe('Check DOM after Rendering React Components', () => {
+    it('should has button', async () => {
+        await expect(<Button text="Click me" />).react.toContainElement("button");
+    });
+})
+```
+
+### toHaveElementCount()
+`toHaveElementCount(selector, count, msg)` is a matcher that checks if the specified component has the specified number of elements after rendering.
+
+```js title="react.test.jsx"
+describe('Check DOM after Rendering React Components', () => {
+    it('should has 1 button', async () => {
+        await expect(<Button text="Click me" />).react.toHaveElementCount("button", 1);
+    });
+})
+```
+
+### toTriggerEvent()
+`toTriggerEvent(selector, event, callback, data, msg)` is a matcher that checks if the specified component triggers the specified event after rendering.
+
+You can use `data` argument to pass: `new value` to the input or select elements or `key` for keypress, keyup, keydown events.
+
+```js title="react.test.jsx"
+describe('Checks whether Callback is called after an event on an item', () => {
+    it('should trigger click event', async () => {
+        await expect(<Button text="Click me" />).react.toTriggerEvent('button', 'click');
+    });
+})
 ```
