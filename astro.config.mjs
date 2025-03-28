@@ -30,6 +30,7 @@ export default defineConfig({
 			components: {
 				Footer: './src/components/Footer.astro',
 				SocialIcons: './src/components/SocialIcons.astro',
+				Head: './src/components/Head.astro',
 			},
 			lastUpdated: true,
 			expressiveCode: {
