@@ -223,3 +223,14 @@ describe('Checks whether Callback is called after an event on an item', () => {
     });
 })
 ```
+
+### toEventuallyContain()
+`toEventuallyContain(selector, timeout, msg)` is a matcher that checks if the specified component eventually contains the specified element after rendering.
+
+```js title="react.test.jsx"
+describe('Check DOM after Rendering React Components', () => {
+    it('should eventually has button', async () => {
+        await expect(<Button text="Click me" />).react.toEventuallyContain("button", 1000);
+    });
+})
+```
