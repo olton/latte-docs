@@ -351,7 +351,11 @@ Asserts that the actual structure is equal to the expected structure.
 ### hasProperty()
 `hasProperty(expected, msg?: string)`
 
-Asserts that the actual value has the specified property.
+Asserts that the actual value has the specified property. You can use dot notation to check for nested properties.
+
+### hasPropertyValue()
+`hasPropertyValue(expected, value, msg?: string)`
+Asserts that the actual value has the specified property with the expected value. You can use dot notation to check for nested properties.
 
 ---
 ## Throw 
@@ -635,5 +639,11 @@ Asserts that the React component contains the specified element.
 ### toHaveElementCount()
 `toHaveElementCount(expected, msg?: string)`
 Asserts that the React component has the specified number of elements.
+
+### toEventuallyContain
+`toEventuallyContain(selector, timeout, msg?: string)`
+
+Asserts that the React component eventually contains the specified element within the given timeout.
+
 
 

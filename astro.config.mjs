@@ -3,12 +3,13 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightThemeRapide from 'starlight-theme-rapide'
 import sidebar from "./sidebar.js"
+import version from "./version.js";
 
 // https://astro.build/config
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: `Latte v0.9.0`,
+			title: `Latte v${version}`,
 			editLink: {
 				baseUrl: 'https://github.com/olton/latte-docs/edit/master/',
 			},
