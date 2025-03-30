@@ -18,10 +18,27 @@ hero:
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Icon } from '@astrojs/starlight/components';
 
-<div style={{ textAlign: 'center', marginBottom: '2rem', fontSize: '28px', fontWeight: 100, lineHeight: '1.2', border: '1px solid var(--sl-color-gray-5)', padding: '1rem', borderRadius: '8px' }}>
-    <b>Latte</b> is a powerful testing framework that allows you to write tests for your applications with ease. It supports testing for: JavaScript, TypeScript, HTML elements (DOM enabled), React Components, and entire web pages with built-in headless browser.
-</div>
+<CardGrid>
+    <Card>
+        <div style={{ textAlign: 'left', fontSize: '25px', fontWeight: 100, lineHeight: '1.2'}}>
+            <b>Latte</b> is a powerful testing framework that allows you to write tests for your applications with ease. 
+            <p>It supports testing for: JavaScript, TypeScript, HTML elements (DOM enabled), React Components, and entire web pages with built-in headless browser.</p>
+            <hr/>
+            <div>
+                <a style={{ textDecoration: "none", display: "flex", color: "#3299f5", fontWeight: "500", fontSize: "28px" }} href="/getting-started/quick-start">Make yourself a latte and Latte will do the rest!...</a>
+            </div>
+        </div>
+    </Card>
+    <Card title="Process Demo">
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <img src="latte-demo.gif" alt="Latte Demo" style={{ width: '600px', maxWidth: "100%" }} />
+        </div>
+    </Card>
+</CardGrid>
+
+
 
 ## Next steps
 
