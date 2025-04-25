@@ -49,13 +49,14 @@ export default [
     {
         label: "Resources",
         items: [
-            {label: "Latte", link: "https://github.com/olton/latte"},
-            {label: "Docs", link: "https://github.com/olton/latte-docs"},
+            {label: "Latte IntelliJ Idea Plugin", link: "https://plugins.jetbrains.com/plugin/27190-latte-test-runner"},
+            {label: "Latte Repository", link: "https://github.com/olton/latte"},
+            {label: "Docs Repository", link: "https://github.com/olton/latte-docs"},
             {label: "Contributing", link: "https://github.com/olton/latte"},
             {label: "License", link: "https://github.com/olton/latte/blob/master/LICENSE"},
             {label: "Metro UI", link: "https://metroui.org.ua"},
             {label: "Panda Templates", link: "https://panda.metroui.org.ua"},
-            {label: "Author", link: "https://pimenov.com.ua"}
+            {label: "Serhii Pimenov - Author", link: "https://pimenov.com.ua"}
         ],
     },
 ]
