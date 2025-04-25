@@ -7,19 +7,31 @@ slug: features/core
 For testing, Latte provides a set of core methods that are essential for writing and executing tests. 
 These methods are designed to be simple and intuitive, allowing developers to focus on writing effective tests without getting bogged down in complex syntax.
 
-### describe()
+### describe(), suite()
 
-This method is used to group related tests together. It takes a string as the first argument, which serves as the name of the test suite, and a callback function as the second argument, which contains the individual test cases.
+These methods are used to group related tests to the `test suite`. 
+It takes a string as the first argument, which serves as the name of the test suite, and a callback function as the second argument, which contains the individual test cases.
 
 ```js
 describe(`Common tests suite`, () => {
-    // ...
+    it(...)
+    ...
+    it(...)
+})
+```
+
+```js
+suite(`Common tests suite`, () => {
+    it(...)
+    ...
+    it(...)
 })
 ```
 
 ### it()
 
-This method is used to define a single test case. It takes a string as the first argument, which serves as the name of the test, and a callback function as the second argument, which contains the actual test logic.
+This method is used to define a single test case in the suite. 
+It takes a string as the first argument, which serves as the name of the test, and a callback function as the second argument, which contains the actual test logic.
 
 ```js
 function hello() {
@@ -36,7 +48,7 @@ describe(`Common tests suite`, () => {
 
 ### test()
 
-This method is used to create a standalone test case. It is similar to `it`, but used outside a `describe` block.
+This method is used to create a standalone test case. It is similar to `it`, but used outside a `describe` or `suite` blocks.
 
 ```js
 function hello() {
