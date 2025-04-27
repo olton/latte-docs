@@ -6,6 +6,7 @@ export default [
             {label: "Quick Start", slug: "getting-started/quick-start"},
             {label: "Configuration", slug: "getting-started/configuration"},
             {label: "TypeScript", slug: "getting-started/typescript"},
+            {label: "IntelliJ Idea Plugin", slug: "getting-started/idea"},
         ]
     },
     {
