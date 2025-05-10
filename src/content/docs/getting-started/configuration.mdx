@@ -29,7 +29,9 @@ This default configuration includes:
     "reportDir": "coverage",
     "reportFile": "",
     "maxWorkers": 4,
-    "progress": "default"
+    "progress": "default",
+    "clearConsole": false,
+    "showStack": false,
 }
 ```
 
@@ -57,6 +59,7 @@ latte --help
 + `-c`, `--coverage` – Enable coverage
 + `-g`, `--debug` – Enable debug mode
 + `-l`, `--loader` – Enable experimental
++ `-s`, `--show-stack` – Show the stack trace for failed tests (required verbose)
 + `--max-workers` - Maximum number of workers to use in parallel mode
 + `--report-type` - Type of report to generate [`lcov`, `html`, `junit`]
 + `--report-dir` - Directory to save the report
@@ -64,6 +67,7 @@ latte --help
 + `--skip` - Patterns for tests to skip
 + `--test` - Test name to run
 + `--progress` - Progress bar type [`default`, `dots`, `bar`]
++ `--clear-console` - Clear console before testing
 + `--init` - Create Latte config in the current directory
 + `--help` - Show help
 

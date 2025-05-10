@@ -67,15 +67,58 @@ expect(value)
 
 Asserts that the actual value is equal to the expected value. Matcher uses the `Object.is()` method to compare values.
 
+```javascript
+describe('toBe matcher', () => {
+    it('should check if values are equal', () => {
+        expect(2 + 2).toBe(4)
+        expect('hello').toBe('hello')
+        expect(null).toBe(null)
+    })
+})
+```
+
 ### toBeStrictEqual()
 `toBeStrictEqual(expected, msg?: string)`
 
 Asserts that the actual value is strict equal (uses `===`) to the expected value.
 
+```javascript
+describe('toBeStrictEqual matcher', () => {
+    it('should check if values are strictly equal', () => {
+        expect(5).toBeStrictEqual(5)
+        expect('test').toBeStrictEqual('test')
+    })
+})
+```
+
 ### toBeEqual()
 `toBeEqual(expected, msg?: string)`
 
 Asserts that the actual value is equal (uses `==`) to the expected value.
+
+```javascript
+describe('toBeEqual matcher', () => {
+    it('should check if values are equal using ==', () => {
+        expect(5).toBeEqual(5)
+        expect('5').toBeEqual(5) // Passes due to type coercion
+        expect(0).toBeEqual(false) // Passes due to type coercion
+        expect('').toBeEqual(false) // Passes due to type coercion
+    })
+})
+```
+
+### any()
+`any(type, msg?: string)`
+
+Asserts that the actual value is defined and is an instance of the type. Type can be constructor of `Number`, `Boolean`, `Function`, `String`, `Object`, `Array`, or other class.
+
+```javascript
+describe(`...`, () => {
+    it('should', () => {
+        expect(123).any(Number)      
+    }); 
+})
+```
 
 ---
 ## Array 
@@ -85,40 +128,213 @@ Asserts that the actual value is equal (uses `==`) to the expected value.
 
 Asserts that the actual array is equal to the expected array.
 
+```javascript
+describe('toBeArrayEqual matcher', () => {
+    it('should check if arrays are equal', () => {
+        expect([1, 2, 3]).toBeArrayEqual([1, 2, 3])
+        expect(['a', 'b', 'c']).toBeArrayEqual(['a', 'b', 'c'])
+
+        // Order matters
+        expect([1, 2, 3]).not.toBeArrayEqual([3, 2, 1])
+
+        // Arrays with objects
+        expect([{a: 1}, {b: 2}]).toBeArrayEqual([{a: 1}, {b: 2}])
+    })
+})
+```
+
 ### toBeArray()
 `toBeArray(msg?: string)`
 
 Asserts that the actual value is an array.
+
+```javascript
+describe('toBeArray matcher', () => {
+    it('should check if value is an array', () => {
+        expect([]).toBeArray()
+        expect([1, 2, 3]).toBeArray()
+        expect(new Array()).toBeArray()
+
+        // Non-arrays
+        expect({}).not.toBeArray()
+        expect('array').not.toBeArray()
+        expect(null).not.toBeArray()
+    })
+})
+```
 
 ### toBeArraySorted()
 `toBeArraySorted(msg?: string)`
 
 Asserts that the actual value is sorted.
 
+```javascript
+describe('toBeArraySorted matcher', () => {
+    it('should check if array is sorted', () => {
+        // Numeric arrays
+        expect([1, 2, 3, 4]).toBeArraySorted()
+        expect([4, 3, 2, 1]).not.toBeArraySorted()
+
+        // String arrays
+        expect(['a', 'b', 'c']).toBeArraySorted()
+        expect(['z', 'y', 'x']).not.toBeArraySorted()
+
+        // Empty array is considered sorted
+        expect([]).toBeArraySorted()
+
+        // Single element array is considered sorted
+        expect([1]).toBeArraySorted()
+    })
+})
+```
+
 ### toBeArrayUnique()
 `toBeArrayUnique(msg?: string)`
 
 Asserts that values in the array are unique.
+
+```javascript
+describe('toBeArrayUnique matcher', () => {
+    it('should check if array has unique values', () => {
+        // Arrays with unique values
+        expect([1, 2, 3]).toBeArrayUnique()
+        expect(['a', 'b', 'c']).toBeArrayUnique()
+
+        // Arrays with duplicate values
+        expect([1, 2, 2, 3]).not.toBeArrayUnique()
+        expect(['a', 'b', 'b']).not.toBeArrayUnique()
+
+        // Empty array is considered to have unique values
+        expect([]).toBeArrayUnique()
+
+        // Arrays with objects (reference equality)
+        const obj = { a: 1 }
+        expect([obj, { b: 2 }]).toBeArrayUnique() // Different objects
+        expect([obj, obj]).not.toBeArrayUnique() // Same reference
+    })
+})
+```
 
 ### toContain()
 `toContain(expected, msg?: string)`
 
 Asserts that the actual value contains the expected value.
 
+```javascript
+describe('toContain matcher', () => {
+    it('should check if array contains a value', () => {
+        // Arrays with primitive values
+        expect([1, 2, 3]).toContain(2)
+        expect(['a', 'b', 'c']).toContain('b')
+        expect([true, false]).toContain(true)
+
+        // Not containing a value
+        expect([1, 2, 3]).not.toContain(4)
+
+        // Works with strings too
+        expect('hello world').toContain('world')
+        expect('test').not.toContain('best')
+
+        // Objects (reference equality)
+        const obj = { a: 1 }
+        const arr = [obj, { b: 2 }]
+        expect(arr).toContain(obj) // Same reference
+        expect(arr).not.toContain({ a: 1 }) // Different reference
+    })
+})
+```
+
 ### toBeEmpty()
 `toBeEmpty(msg?: string)`
 
 Asserts that the actual value is empty.
+
+```javascript
+describe('toBeEmpty matcher', () => {
+    it('should check if value is empty', () => {
+        // Empty array
+        expect([]).toBeEmpty()
+        expect([1, 2]).not.toBeEmpty()
+
+        // Empty string
+        expect('').toBeEmpty()
+        expect('hello').not.toBeEmpty()
+
+        // Empty object
+        expect({}).toBeEmpty()
+        expect({ a: 1 }).not.toBeEmpty()
+
+        // Empty Map and Set
+        expect(new Map()).toBeEmpty()
+        expect(new Set()).toBeEmpty()
+
+        const map = new Map()
+        map.set('key', 'value')
+        expect(map).not.toBeEmpty()
+
+        const set = new Set()
+        set.add('item')
+        expect(set).not.toBeEmpty()
+    })
+})
+```
 
 ### hasLength()
 `hasLength(expected, msg?: string)`
 
 Asserts that the array-like object has the expected length.
 
+```javascript
+describe('hasLength matcher', () => {
+    it('should check if array-like object has expected length', () => {
+        // Arrays
+        expect([1, 2, 3]).hasLength(3)
+        expect([]).hasLength(0)
+
+        // Strings
+        expect('hello').hasLength(5)
+        expect('').hasLength(0)
+
+        // Array-like objects
+        const arrayLike = { 0: 'a', 1: 'b', 2: 'c', length: 3 }
+        expect(arrayLike).hasLength(3)
+
+        // DOM collections (in browser environment)
+        // const elements = document.querySelectorAll('div')
+        // expect(elements).hasLength(5) // If there are 5 divs
+
+        // Not matching length
+        expect([1, 2, 3]).not.hasLength(4)
+        expect('test').not.hasLength(5)
+    })
+})
+```
+
 ### toBeArrayBuffer()
 `toBeArrayBuffer(msg?: string)`
 
 Asserts that the actual value is an ArrayBuffer.
+
+```javascript
+describe('toBeArrayBuffer matcher', () => {
+    it('should check if value is an ArrayBuffer', () => {
+        // Create an ArrayBuffer
+        const buffer = new ArrayBuffer(8) // 8 bytes
+        expect(buffer).toBeArrayBuffer()
+
+        // Not ArrayBuffer
+        expect(new Uint8Array(buffer)).not.toBeArrayBuffer() // TypedArray, not ArrayBuffer
+        expect({}).not.toBeArrayBuffer()
+        expect([]).not.toBeArrayBuffer()
+        expect('buffer').not.toBeArrayBuffer()
+
+        // Creating from existing data
+        const data = new Uint8Array([1, 2, 3, 4])
+        const dataBuffer = data.buffer
+        expect(dataBuffer).toBeArrayBuffer()
+    })
+})
+```
 
 ---
 ## Async
@@ -128,9 +344,67 @@ Asserts that the actual value is an ArrayBuffer.
 
 Asserts that the actual promise resolves with the expected value.
 
+```javascript
+describe('toBeResolvedWith matcher', () => {
+    it('should check if promise resolves with expected value', async () => {
+        // Simple resolved promise
+        await expect(Promise.resolve(42)).toBeResolvedWith(42)
+
+        // Promise that resolves with an object
+        await expect(Promise.resolve({ name: 'John' })).toBeResolvedWith({ name: 'John' })
+
+        // Promise that resolves with a different value
+        await expect(Promise.resolve('hello')).not.toBeResolvedWith('world')
+
+        // Async function
+        async function fetchData() {
+            return 'data'
+        }
+
+        await expect(fetchData()).toBeResolvedWith('data')
+
+        // With timeout (simulating API call)
+        function delayedResolve(value, delay) {
+            return new Promise(resolve => setTimeout(() => resolve(value), delay))
+        }
+
+        await expect(delayedResolve('result', 100)).toBeResolvedWith('result')
+    })
+})
+```
+
 ### toBeRejectedWith()
 `toBeRejectedWith(expected, msg?: string)`
 Asserts that the actual promise rejects with the expected value.
+
+```javascript
+describe('toBeRejectedWith matcher', () => {
+    it('should check if promise rejects with expected value', async () => {
+        // Simple rejected promise
+        await expect(Promise.reject(new Error('Failed'))).toBeRejectedWith(new Error('Failed'))
+
+        // Promise that rejects with a string
+        await expect(Promise.reject('error message')).toBeRejectedWith('error message')
+
+        // Promise that rejects with a different value
+        await expect(Promise.reject('error')).not.toBeRejectedWith('success')
+
+        // Async function that throws
+        async function failingFunction() {
+            throw new Error('Something went wrong')
+        }
+
+        await expect(failingFunction()).toBeRejectedWith(new Error('Something went wrong'))
+
+        // With timeout (simulating API call failure)
+        function delayedReject(error, delay) {
+            return new Promise((_, reject) => setTimeout(() => reject(error), delay))
+        }
+
+        await expect(delayedReject('API error', 100)).toBeRejectedWith('API error')
+    })
+})
+```
 
 ---
 ## Color 
@@ -140,40 +414,269 @@ Asserts that the actual promise rejects with the expected value.
 
 Asserts that the actual value is a HEX color.
 
+```javascript
+describe('toBeHEXColor matcher', () => {
+    it('should check if value is a valid HEX color', () => {
+        // Valid HEX colors
+        expect('#000').toBeHEXColor() // 3-digit
+        expect('#000000').toBeHEXColor() // 6-digit
+        expect('#FF0000').toBeHEXColor() // Red
+        expect('#00FF00').toBeHEXColor() // Green
+        expect('#0000FF').toBeHEXColor() // Blue
+        expect('#fff').toBeHEXColor() // White (3-digit)
+        expect('#FFFFFF').toBeHEXColor() // White (6-digit)
+
+        // Invalid HEX colors
+        expect('red').not.toBeHEXColor() // Not HEX format
+        expect('#GGG').not.toBeHEXColor() // Invalid characters
+        expect('#12345').not.toBeHEXColor() // Wrong length
+        expect('000000').not.toBeHEXColor() // Missing #
+        expect('#00000G').not.toBeHEXColor() // Invalid character
+    })
+})
+```
+
 ### toBeRGBColor()
 `toBeRGBColor(msg?: string)`
 
 Asserts that the actual value is an RGB color.
+
+```javascript
+describe('toBeRGBColor matcher', () => {
+    it('should check if value is a valid RGB color', () => {
+        // Valid RGB colors
+        expect('rgb(0, 0, 0)').toBeRGBColor() // Black
+        expect('rgb(255, 0, 0)').toBeRGBColor() // Red
+        expect('rgb(0, 255, 0)').toBeRGBColor() // Green
+        expect('rgb(0, 0, 255)').toBeRGBColor() // Blue
+        expect('rgb(255, 255, 255)').toBeRGBColor() // White
+        expect('rgb(128, 128, 128)').toBeRGBColor() // Gray
+
+        // Spaces don't matter
+        expect('rgb(255,0,0)').toBeRGBColor() // No spaces
+        expect('rgb( 255, 0, 0 )').toBeRGBColor() // Extra spaces
+
+        // Invalid RGB colors
+        expect('rgb(256, 0, 0)').not.toBeRGBColor() // Value > 255
+        expect('rgb(-1, 0, 0)').not.toBeRGBColor() // Negative value
+        expect('rgb(0, 0)').not.toBeRGBColor() // Missing value
+        expect('rgb(0, 0, 0, 0)').not.toBeRGBColor() // Too many values
+        expect('rgb(a, b, c)').not.toBeRGBColor() // Non-numeric values
+        expect('rgba(0, 0, 0, 1)').not.toBeRGBColor() // RGBA, not RGB
+        expect('#FF0000').not.toBeRGBColor() // HEX, not RGB
+    })
+})
+```
 
 ### toBeRGBAColor()
 `toBeRGBAColor(msg?: string)`
 
 Asserts that the actual value is an RGBA color.
 
+```javascript
+describe('toBeRGBAColor matcher', () => {
+    it('should check if value is a valid RGBA color', () => {
+        // Valid RGBA colors
+        expect('rgba(0, 0, 0, 1)').toBeRGBAColor() // Black, fully opaque
+        expect('rgba(255, 0, 0, 1)').toBeRGBAColor() // Red, fully opaque
+        expect('rgba(0, 255, 0, 0.5)').toBeRGBAColor() // Green, semi-transparent
+        expect('rgba(0, 0, 255, 0)').toBeRGBAColor() // Blue, fully transparent
+        expect('rgba(255, 255, 255, 0.75)').toBeRGBAColor() // White, 75% opaque
+
+        // Spaces don't matter
+        expect('rgba(255,0,0,1)').toBeRGBAColor() // No spaces
+        expect('rgba( 255, 0, 0, 1 )').toBeRGBAColor() // Extra spaces
+
+        // Alpha values
+        expect('rgba(0, 0, 0, 0)').toBeRGBAColor() // Alpha 0
+        expect('rgba(0, 0, 0, 0.5)').toBeRGBAColor() // Alpha 0.5
+        expect('rgba(0, 0, 0, 1)').toBeRGBAColor() // Alpha 1
+
+        // Invalid RGBA colors
+        expect('rgba(256, 0, 0, 1)').not.toBeRGBAColor() // RGB value > 255
+        expect('rgba(0, 0, 0, 2)').not.toBeRGBAColor() // Alpha > 1
+        expect('rgba(0, 0, 0, -0.5)').not.toBeRGBAColor() // Negative alpha
+        expect('rgba(0, 0, 0)').not.toBeRGBAColor() // Missing alpha
+        expect('rgba(a, b, c, d)').not.toBeRGBAColor() // Non-numeric values
+        expect('rgb(0, 0, 0)').not.toBeRGBAColor() // RGB, not RGBA
+        expect('#FF0000').not.toBeRGBAColor() // HEX, not RGBA
+    })
+})
+```
+
 ### toBeHSVColor()
 `toBeHSVColor(msg?: string)`
 
-Asserts that the actual value is an HSL color.
+Asserts that the actual value is an HSV color.
+
+```javascript
+describe('toBeHSVColor matcher', () => {
+    it('should check if value is a valid HSV color', () => {
+        // Valid HSV colors
+        expect('hsv(0, 0%, 0%)').toBeHSVColor() // Black
+        expect('hsv(0, 100%, 100%)').toBeHSVColor() // Red
+        expect('hsv(120, 100%, 100%)').toBeHSVColor() // Green
+        expect('hsv(240, 100%, 100%)').toBeHSVColor() // Blue
+        expect('hsv(0, 0%, 100%)').toBeHSVColor() // White
+
+        // Hue values (0-360)
+        expect('hsv(180, 50%, 50%)').toBeHSVColor() // Cyan-ish
+        expect('hsv(270, 50%, 50%)').toBeHSVColor() // Purple-ish
+        expect('hsv(360, 50%, 50%)').toBeHSVColor() // Red (360 = 0)
+
+        // Spaces don't matter
+        expect('hsv(120,100%,100%)').toBeHSVColor() // No spaces
+        expect('hsv( 120, 100%, 100% )').toBeHSVColor() // Extra spaces
+
+        // Invalid HSV colors
+        expect('hsv(361, 50%, 50%)').not.toBeHSVColor() // Hue > 360
+        expect('hsv(-1, 50%, 50%)').not.toBeHSVColor() // Negative hue
+        expect('hsv(120, 101%, 50%)').not.toBeHSVColor() // Saturation > 100%
+        expect('hsv(120, 50%, 101%)').not.toBeHSVColor() // Value > 100%
+        expect('hsv(120, 50%)').not.toBeHSVColor() // Missing value
+        expect('hsv(a, b%, c%)').not.toBeHSVColor() // Non-numeric values
+        expect('hsl(120, 50%, 50%)').not.toBeHSVColor() // HSL, not HSV
+    })
+})
+```
 
 ### toBeHSLColor()
 `toBeHSLColor(msg?: string)`
 
 Asserts that the actual value is an HSL color.
 
+```javascript
+describe('toBeHSLColor matcher', () => {
+    it('should check if value is a valid HSL color', () => {
+        // Valid HSL colors
+        expect('hsl(0, 0%, 0%)').toBeHSLColor() // Black
+        expect('hsl(0, 100%, 50%)').toBeHSLColor() // Red
+        expect('hsl(120, 100%, 50%)').toBeHSLColor() // Green
+        expect('hsl(240, 100%, 50%)').toBeHSLColor() // Blue
+        expect('hsl(0, 0%, 100%)').toBeHSLColor() // White
+
+        // Hue values (0-360)
+        expect('hsl(180, 50%, 50%)').toBeHSLColor() // Cyan-ish
+        expect('hsl(270, 50%, 50%)').toBeHSLColor() // Purple-ish
+        expect('hsl(360, 50%, 50%)').toBeHSLColor() // Red (360 = 0)
+
+        // Spaces don't matter
+        expect('hsl(120,100%,50%)').toBeHSLColor() // No spaces
+        expect('hsl( 120, 100%, 50% )').toBeHSLColor() // Extra spaces
+
+        // Invalid HSL colors
+        expect('hsl(361, 50%, 50%)').not.toBeHSLColor() // Hue > 360
+        expect('hsl(-1, 50%, 50%)').not.toBeHSLColor() // Negative hue
+        expect('hsl(120, 101%, 50%)').not.toBeHSLColor() // Saturation > 100%
+        expect('hsl(120, 50%, 101%)').not.toBeHSLColor() // Lightness > 100%
+        expect('hsl(120, 50%)').not.toBeHSLColor() // Missing lightness
+        expect('hsl(a, b%, c%)').not.toBeHSLColor() // Non-numeric values
+        expect('hsv(120, 50%, 50%)').not.toBeHSLColor() // HSV, not HSL
+    })
+})
+```
+
 ### toBeHSLAColor()
 `toBeHSLAColor(msg?: string)`
 
 Asserts that the actual value is an HSLA color.
+
+```javascript
+describe('toBeHSLAColor matcher', () => {
+    it('should check if value is a valid HSLA color', () => {
+        // Valid HSLA colors
+        expect('hsla(0, 0%, 0%, 1)').toBeHSLAColor() // Black, fully opaque
+        expect('hsla(0, 100%, 50%, 1)').toBeHSLAColor() // Red, fully opaque
+        expect('hsla(120, 100%, 50%, 0.5)').toBeHSLAColor() // Green, semi-transparent
+        expect('hsla(240, 100%, 50%, 0)').toBeHSLAColor() // Blue, fully transparent
+        expect('hsla(0, 0%, 100%, 0.75)').toBeHSLAColor() // White, 75% opaque
+
+        // Hue values (0-360)
+        expect('hsla(180, 50%, 50%, 1)').toBeHSLAColor() // Cyan-ish
+        expect('hsla(270, 50%, 50%, 0.5)').toBeHSLAColor() // Purple-ish
+
+        // Spaces don't matter
+        expect('hsla(120,100%,50%,1)').toBeHSLAColor() // No spaces
+        expect('hsla( 120, 100%, 50%, 1 )').toBeHSLAColor() // Extra spaces
+
+        // Alpha values
+        expect('hsla(0, 0%, 0%, 0)').toBeHSLAColor() // Alpha 0
+        expect('hsla(0, 0%, 0%, 0.5)').toBeHSLAColor() // Alpha 0.5
+        expect('hsla(0, 0%, 0%, 1)').toBeHSLAColor() // Alpha 1
+
+        // Invalid HSLA colors
+        expect('hsla(361, 50%, 50%, 1)').not.toBeHSLAColor() // Hue > 360
+        expect('hsla(120, 101%, 50%, 1)').not.toBeHSLAColor() // Saturation > 100%
+        expect('hsla(120, 50%, 101%, 1)').not.toBeHSLAColor() // Lightness > 100%
+        expect('hsla(120, 50%, 50%, 2)').not.toBeHSLAColor() // Alpha > 1
+        expect('hsla(120, 50%, 50%)').not.toBeHSLAColor() // Missing alpha
+        expect('hsla(a, b%, c%, d)').not.toBeHSLAColor() // Non-numeric values
+        expect('hsl(120, 50%, 50%)').not.toBeHSLAColor() // HSL, not HSLA
+    })
+})
+```
 
 ### toBeCMYKColor()
 `toBeCMYKColor(msg?: string)`
 
 Asserts that the actual value is a CMYK color.
 
+```javascript
+describe('toBeCMYKColor matcher', () => {
+    it('should check if value is a valid CMYK color', () => {
+        // Valid CMYK colors
+        expect('cmyk(0%, 0%, 0%, 100%)').toBeCMYKColor() // Black
+        expect('cmyk(0%, 100%, 100%, 0%)').toBeCMYKColor() // Red
+        expect('cmyk(100%, 0%, 100%, 0%)').toBeCMYKColor() // Green
+        expect('cmyk(100%, 100%, 0%, 0%)').toBeCMYKColor() // Blue
+        expect('cmyk(0%, 0%, 0%, 0%)').toBeCMYKColor() // White
+
+        // Spaces don't matter
+        expect('cmyk(0%,0%,0%,100%)').toBeCMYKColor() // No spaces
+        expect('cmyk( 0%, 0%, 0%, 100% )').toBeCMYKColor() // Extra spaces
+
+        // Invalid CMYK colors
+        expect('cmyk(101%, 0%, 0%, 0%)').not.toBeCMYKColor() // C > 100%
+        expect('cmyk(0%, 101%, 0%, 0%)').not.toBeCMYKColor() // M > 100%
+        expect('cmyk(0%, 0%, 101%, 0%)').not.toBeCMYKColor() // Y > 100%
+        expect('cmyk(0%, 0%, 0%, 101%)').not.toBeCMYKColor() // K > 100%
+        expect('cmyk(-1%, 0%, 0%, 0%)').not.toBeCMYKColor() // Negative value
+        expect('cmyk(0%, 0%, 0%)').not.toBeCMYKColor() // Missing K
+        expect('cmyk(a%, b%, c%, d%)').not.toBeCMYKColor() // Non-numeric values
+        expect('rgb(0, 0, 0)').not.toBeCMYKColor() // RGB, not CMYK
+    })
+})
+```
+
 ### toBeColor()
 `toBeColor(msg?: string)`
 
 Asserts that the actual value is a valid color (HEX, RGB, RGBA, HSV, HSL, HSLA, or CMYK).
+
+```javascript
+describe('toBeColor matcher', () => {
+    it('should check if value is a valid color in any format', () => {
+        // Valid colors in different formats
+        expect('#FF0000').toBeColor() // HEX
+        expect('#F00').toBeColor() // Short HEX
+        expect('rgb(255, 0, 0)').toBeColor() // RGB
+        expect('rgba(255, 0, 0, 1)').toBeColor() // RGBA
+        expect('hsl(0, 100%, 50%)').toBeColor() // HSL
+        expect('hsla(0, 100%, 50%, 1)').toBeColor() // HSLA
+        expect('hsv(0, 100%, 100%)').toBeColor() // HSV
+        expect('cmyk(0%, 100%, 100%, 0%)').toBeColor() // CMYK
+
+        // Invalid colors
+        expect('not-a-color').not.toBeColor()
+        expect('rgb(256, 0, 0)').not.toBeColor() // Invalid RGB value
+        expect('#GGG').not.toBeColor() // Invalid HEX
+        expect('hsl(400, 100%, 50%)').not.toBeColor() // Invalid HSL
+
+        // Color names are not supported by default
+        expect('red').not.toBeColor() // Color name, not a valid format
+    })
+})
+```
 
 ---
 ## Html 
@@ -183,95 +686,916 @@ Asserts that the actual value is a valid color (HEX, RGB, RGBA, HSV, HSL, HSLA, 
 
 Asserts that the actual value is an HTML element.
 
+```javascript
+describe('toBeHtmlElement matcher', () => {
+    it('should check if value is an HTML element', () => {
+        // In a browser environment
+        const div = document.createElement('div')
+        const span = document.createElement('span')
+        const input = document.createElement('input')
+
+        expect(div).toBeHtmlElement()
+        expect(span).toBeHtmlElement()
+        expect(input).toBeHtmlElement()
+
+        // Not HTML elements
+        expect(document).not.toBeHtmlElement() // Document, not an element
+        expect(document.createTextNode('text')).not.toBeHtmlElement() // Text node, not an element
+        expect({}).not.toBeHtmlElement() // Plain object
+        expect('<div>').not.toBeHtmlElement() // String, not an element
+
+        // With specific tag check (using instanceof)
+        expect(div instanceof HTMLDivElement).toBe(true)
+        expect(input instanceof HTMLInputElement).toBe(true)
+    })
+})
+```
+
 ### toBeNode()
 `toBeNode(msg?: string)`
 
 Asserts that the actual value is an HTML node.
+
+```javascript
+describe('toBeNode matcher', () => {
+    it('should check if value is an HTML node', () => {
+        // In a browser environment
+        // Element nodes
+        const div = document.createElement('div')
+        expect(div).toBeNode()
+
+        // Text nodes
+        const textNode = document.createTextNode('Hello')
+        expect(textNode).toBeNode()
+
+        // Comment nodes
+        const commentNode = document.createComment('Comment')
+        expect(commentNode).toBeNode()
+
+        // Document nodes
+        expect(document).toBeNode()
+
+        // Document fragment
+        const fragment = document.createDocumentFragment()
+        expect(fragment).toBeNode()
+
+        // Not nodes
+        expect({}).not.toBeNode() // Plain object
+        expect('<div>').not.toBeNode() // String
+        expect(42).not.toBeNode() // Number
+
+        // Node types
+        expect(div.nodeType).toBe(Node.ELEMENT_NODE) // 1
+        expect(textNode.nodeType).toBe(Node.TEXT_NODE) // 3
+        expect(commentNode.nodeType).toBe(Node.COMMENT_NODE) // 8
+        expect(document.nodeType).toBe(Node.DOCUMENT_NODE) // 9
+        expect(fragment.nodeType).toBe(Node.DOCUMENT_FRAGMENT_NODE) // 11
+    })
+})
+```
 
 ### toBeDocument()
 `toBeDocument(msg?: string)`
 
 Asserts that the actual value is an HTML document.
 
+```javascript
+describe('toBeDocument matcher', () => {
+    it('should check if value is an HTML document', () => {
+        // In a browser environment
+        expect(document).toBeDocument()
+
+        // Creating a new document
+        const newDoc = document.implementation.createHTMLDocument('New Document')
+        expect(newDoc).toBeDocument()
+
+        // Not documents
+        expect(document.createElement('div')).not.toBeDocument() // Element, not document
+        expect(document.createTextNode('text')).not.toBeDocument() // Text node, not document
+        expect({}).not.toBeDocument() // Plain object
+        expect('<html></html>').not.toBeDocument() // String, not document
+
+        // Document properties
+        expect(document.nodeType).toBe(Node.DOCUMENT_NODE) // 9
+        expect(document.documentElement.tagName).toBe('HTML')
+        expect(document.body.tagName).toBe('BODY')
+    })
+})
+```
+
 ### toBeHtmlCollection()
 `toBeHtmlCollection(msg?: string)`
 
 Asserts that the actual value is an HTML collection.
+
+```javascript
+describe('toBeHtmlCollection matcher', () => {
+    it('should check if value is an HTML collection', () => {
+        // In a browser environment
+        // Create some elements
+        document.body.innerHTML = `
+            <div class="test-class"></div>
+            <div class="test-class"></div>
+            <span class="test-class"></span>
+        `
+
+        // Get collections
+        const collection1 = document.getElementsByClassName('test-class')
+        const collection2 = document.getElementsByTagName('div')
+
+        expect(collection1).toBeHtmlCollection()
+        expect(collection2).toBeHtmlCollection()
+
+        // Not HTML collections
+        expect(document.querySelectorAll('.test-class')).not.toBeHtmlCollection() // NodeList, not HTMLCollection
+        expect([]).not.toBeHtmlCollection() // Array, not HTMLCollection
+        expect({}).not.toBeHtmlCollection() // Plain object
+
+        // HTML collection properties
+        expect(collection1.length).toBe(3)
+        expect(collection2.length).toBe(2)
+        expect(collection1[0].tagName).toBe('DIV')
+        expect(collection1[2].tagName).toBe('SPAN')
+
+        // Live collection (automatically updates)
+        const newDiv = document.createElement('div')
+        newDiv.className = 'test-class'
+        document.body.appendChild(newDiv)
+        expect(collection1.length).toBe(4) // Length updated
+    })
+})
+```
 
 ### toBeWindow()
 `toBeWindow(msg?: string)`
 
 Asserts that the actual value is a Window object.
 
+```javascript
+describe('toBeWindow matcher', () => {
+    it('should check if value is a Window object', () => {
+        // In a browser environment
+        expect(window).toBeWindow()
+
+        // Accessing window through different references
+        expect(self).toBeWindow() // self refers to the window
+        expect(globalThis).toBeWindow() // globalThis refers to the window in browsers
+
+        // Not window objects
+        expect(document).not.toBeWindow() // Document, not Window
+        expect(document.createElement('div')).not.toBeWindow() // Element, not Window
+        expect({}).not.toBeWindow() // Plain object
+
+        // Window properties and methods
+        expect(window.document).toBe(document)
+        expect(typeof window.alert).toBe('function')
+        expect(typeof window.setTimeout).toBe('function')
+
+        // Creating an iframe to get another window object
+        const iframe = document.createElement('iframe')
+        document.body.appendChild(iframe)
+        expect(iframe.contentWindow).toBeWindow() // iframe's window
+        expect(iframe.contentWindow).not.toBe(window) // Different window object
+
+        // Clean up
+        document.body.removeChild(iframe)
+    })
+})
+```
+
 ### toBeTextNode()
 `toBeTextNode(msg?: string)`
 
 Asserts that the actual value is a Text node.
+
+```javascript
+describe('toBeTextNode matcher', () => {
+    it('should check if value is a Text node', () => {
+        // In a browser environment
+        // Create a text node
+        const textNode = document.createTextNode('Hello, world!')
+        expect(textNode).toBeTextNode()
+
+        // Text node inside an element
+        const div = document.createElement('div')
+        div.textContent = 'Text inside div'
+        const childTextNode = div.firstChild
+        expect(childTextNode).toBeTextNode()
+
+        // Not text nodes
+        expect(document.createElement('div')).not.toBeTextNode() // Element, not Text node
+        expect(document.createComment('comment')).not.toBeTextNode() // Comment node, not Text node
+        expect(document).not.toBeTextNode() // Document, not Text node
+        expect('text string').not.toBeTextNode() // String, not Text node
+
+        // Text node properties
+        expect(textNode.nodeType).toBe(Node.TEXT_NODE) // 3
+        expect(textNode.textContent).toBe('Hello, world!')
+        expect(textNode.nodeValue).toBe('Hello, world!')
+
+        // Modifying text content
+        textNode.textContent = 'Updated text'
+        expect(textNode.textContent).toBe('Updated text')
+    })
+})
+```
 
 ### hasClass()
 `hasClass(expected, msg?: string)`
 
 Asserts that the HTML element has the specified class.
 
+```javascript
+describe('hasClass matcher', () => {
+    it('should check if element has the specified class', () => {
+        // In a browser environment
+        // Create elements with classes
+        const div = document.createElement('div')
+        div.className = 'container main-content'
+
+        const button = document.createElement('button')
+        button.classList.add('btn', 'btn-primary', 'large')
+
+        // Check for classes
+        expect(div).hasClass('container')
+        expect(div).hasClass('main-content')
+        expect(div).not.hasClass('footer')
+
+        expect(button).hasClass('btn')
+        expect(button).hasClass('btn-primary')
+        expect(button).hasClass('large')
+        expect(button).not.hasClass('small')
+
+        // Adding and removing classes
+        div.classList.add('new-class')
+        expect(div).hasClass('new-class')
+
+        div.classList.remove('container')
+        expect(div).not.hasClass('container')
+
+        // Toggle class
+        button.classList.toggle('active')
+        expect(button).hasClass('active')
+
+        button.classList.toggle('active')
+        expect(button).not.hasClass('active')
+
+        // Case sensitivity
+        div.className = 'CamelCase'
+        expect(div).hasClass('CamelCase')
+        expect(div).not.hasClass('camelcase') // Class names are case-sensitive
+    })
+})
+```
+
 ### hasAttribute()
 `hasAttribute(expected, msg?: string)`
 
 Asserts that the HTML element has the specified attribute.
+
+```javascript
+describe('hasAttribute matcher', () => {
+    it('should check if element has the specified attribute', () => {
+        // In a browser environment
+        // Create elements with attributes
+        const input = document.createElement('input')
+        input.type = 'text'
+        input.id = 'username'
+        input.setAttribute('data-testid', 'username-input')
+        input.setAttribute('placeholder', 'Enter username')
+        input.required = true
+
+        // Check for attributes
+        expect(input).hasAttribute('type')
+        expect(input).hasAttribute('id')
+        expect(input).hasAttribute('data-testid')
+        expect(input).hasAttribute('placeholder')
+        expect(input).hasAttribute('required')
+        expect(input).not.hasAttribute('disabled')
+
+        // Check attribute values separately
+        expect(input.getAttribute('type')).toBe('text')
+        expect(input.getAttribute('id')).toBe('username')
+        expect(input.getAttribute('data-testid')).toBe('username-input')
+
+        // Adding and removing attributes
+        input.setAttribute('maxlength', '20')
+        expect(input).hasAttribute('maxlength')
+
+        input.removeAttribute('placeholder')
+        expect(input).not.hasAttribute('placeholder')
+
+        // Boolean attributes
+        const checkbox = document.createElement('input')
+        checkbox.type = 'checkbox'
+        checkbox.checked = true
+        checkbox.disabled = true
+
+        expect(checkbox).hasAttribute('checked')
+        expect(checkbox).hasAttribute('disabled')
+
+        checkbox.disabled = false
+        expect(checkbox).not.hasAttribute('disabled')
+    })
+})
+```
 
 ### hasChildren()
 `hasChildren(msg?: string)`
 
 Asserts that the HTML element has children.
 
+```javascript
+describe('hasChildren matcher', () => {
+    it('should check if element has children', () => {
+        // In a browser environment
+        // Create parent elements
+        const div = document.createElement('div')
+        const ul = document.createElement('ul')
+        const emptyDiv = document.createElement('div')
+
+        // Add children to div
+        const p = document.createElement('p')
+        const span = document.createElement('span')
+        div.appendChild(p)
+        div.appendChild(span)
+
+        // Add children to ul
+        for (let i = 0; i < 3; i++) {
+            const li = document.createElement('li')
+            li.textContent = `Item ${i + 1}`
+            ul.appendChild(li)
+        }
+
+        // Check for children
+        expect(div).hasChildren()
+        expect(ul).hasChildren()
+        expect(emptyDiv).not.hasChildren()
+
+        // Check number of children
+        expect(div.children.length).toBe(2)
+        expect(ul.children.length).toBe(3)
+        expect(emptyDiv.children.length).toBe(0)
+
+        // Text nodes are not considered element children
+        const textDiv = document.createElement('div')
+        textDiv.textContent = 'This is text content'
+
+        // hasChildren only checks for element nodes, not text nodes
+        expect(textDiv).not.hasChildren()
+        expect(textDiv.childNodes.length).toBe(1) // But it has a child node (text node)
+
+        // Adding and removing children
+        const button = document.createElement('button')
+        emptyDiv.appendChild(button)
+        expect(emptyDiv).hasChildren() // Now it has a child
+
+        emptyDiv.removeChild(button)
+        expect(emptyDiv).not.hasChildren() // Empty again
+    })
+})
+```
+
 ### hasParent()
 `hasParent(msg?: string)`
 
 Asserts that the HTML element has a parent.
+
+```javascript
+describe('hasParent matcher', () => {
+    it('should check if element has a parent', () => {
+        // In a browser environment
+        // Create parent and child elements
+        const parent = document.createElement('div')
+        const child1 = document.createElement('p')
+        const child2 = document.createElement('span')
+        const detachedElement = document.createElement('div')
+
+        // Append children to parent
+        parent.appendChild(child1)
+        parent.appendChild(child2)
+
+        // Check for parent
+        expect(child1).hasParent()
+        expect(child2).hasParent()
+        expect(detachedElement).not.hasParent() // Not attached to any parent
+
+        // Check parent node
+        expect(child1.parentNode).toBe(parent)
+        expect(child2.parentNode).toBe(parent)
+        expect(detachedElement.parentNode).toBeNull()
+
+        // Append to document body
+        document.body.appendChild(parent)
+        expect(parent).hasParent() // Now body is its parent
+
+        // Remove from parent
+        parent.removeChild(child1)
+        expect(child1).not.hasParent() // No longer has a parent
+
+        // Clean up
+        document.body.removeChild(parent)
+
+        // Creating a document fragment
+        const fragment = document.createDocumentFragment()
+        const fragmentChild = document.createElement('div')
+        fragment.appendChild(fragmentChild)
+
+        expect(fragmentChild).hasParent() // Fragment is its parent
+    })
+})
+```
 
 ### hasStyleProperty()
 `hasStyleProperty(expected, msg?: string)`
 
 Asserts that the HTML element has the specified style in style property.
 
+```javascript
+describe('hasStyleProperty matcher', () => {
+    it('should check if element has the specified style property', () => {
+        // In a browser environment
+        // Create an element with inline styles
+        const div = document.createElement('div')
+        div.style.color = 'red'
+        div.style.backgroundColor = 'blue'
+        div.style.fontSize = '16px'
+        div.style.padding = '10px'
+
+        // Check for style properties
+        expect(div).hasStyleProperty('color')
+        expect(div).hasStyleProperty('background-color') // Note: camelCase in JS, kebab-case in CSS
+        expect(div).hasStyleProperty('font-size')
+        expect(div).hasStyleProperty('padding')
+        expect(div).not.hasStyleProperty('margin')
+        expect(div).not.hasStyleProperty('border')
+
+        // Check style values separately
+        expect(div.style.color).toBe('red')
+        expect(div.style.backgroundColor).toBe('blue')
+        expect(div.style.fontSize).toBe('16px')
+
+        // Adding and removing styles
+        div.style.margin = '20px'
+        expect(div).hasStyleProperty('margin')
+
+        div.style.removeProperty('padding')
+        expect(div).not.hasStyleProperty('padding')
+
+        // Setting styles with cssText
+        const span = document.createElement('span')
+        span.style.cssText = 'color: green; font-weight: bold; text-decoration: underline;'
+
+        expect(span).hasStyleProperty('color')
+        expect(span).hasStyleProperty('font-weight')
+        expect(span).hasStyleProperty('text-decoration')
+
+        // Setting styles with setAttribute
+        const p = document.createElement('p')
+        p.setAttribute('style', 'display: block; visibility: hidden;')
+
+        expect(p).hasStyleProperty('display')
+        expect(p).hasStyleProperty('visibility')
+    })
+})
+```
+
 ### hasStyle()
 `hasStyle(prop, val, msg?: string)`
 
 Asserts that the HTML element has the specified style property.
+
+```javascript
+describe('hasStyle matcher', () => {
+    it('should check if element has the specified style property with the expected value', () => {
+        // In a browser environment
+        // Create an element with inline styles
+        const div = document.createElement('div')
+        div.style.color = 'red'
+        div.style.backgroundColor = 'blue'
+        div.style.fontSize = '16px'
+        div.style.padding = '10px'
+
+        // Check for style properties with specific values
+        expect(div).hasStyle('color', 'red')
+        expect(div).hasStyle('background-color', 'blue')
+        expect(div).hasStyle('font-size', '16px')
+        expect(div).hasStyle('padding', '10px')
+
+        // Negative tests
+        expect(div).not.hasStyle('color', 'blue') // Has color, but not blue
+        expect(div).not.hasStyle('margin', '20px') // Doesn't have margin property
+
+        // Adding and modifying styles
+        div.style.margin = '20px'
+        expect(div).hasStyle('margin', '20px')
+
+        div.style.color = 'green'
+        expect(div).hasStyle('color', 'green')
+        expect(div).not.hasStyle('color', 'red') // No longer red
+
+        // Different ways to set styles
+        const span = document.createElement('span')
+        span.style.cssText = 'color: purple; font-weight: bold; text-decoration: underline;'
+
+        expect(span).hasStyle('color', 'purple')
+        expect(span).hasStyle('font-weight', 'bold')
+        expect(span).hasStyle('text-decoration', 'underline')
+
+        // Computed styles (would work in a real browser)
+        // Note: This example assumes the browser's default styles
+        /*
+        document.body.appendChild(div)
+        const computedStyle = window.getComputedStyle(div)
+        expect(computedStyle.getPropertyValue('color')).toBe('rgb(255, 0, 0)') // red in RGB
+        document.body.removeChild(div)
+        */
+    })
+})
+```
 
 ### hasStyles()
 `hasStyles(styles: object, msg?: string)`
 
 Asserts that the HTML element has the specified styles.
 
-### hasSiblings()
+```javascript
+describe('hasStyles matcher', () => {
+    it('should check if element has multiple specified styles', () => {
+        // In a browser environment
+        // Create an element with inline styles
+        const div = document.createElement('div')
+        div.style.color = 'red'
+        div.style.backgroundColor = 'blue'
+        div.style.fontSize = '16px'
+        div.style.padding = '10px'
+        div.style.margin = '20px'
+        div.style.border = '1px solid black'
 
+        // Check multiple styles at once
+        expect(div).hasStyles({
+            'color': 'red',
+            'background-color': 'blue',
+            'font-size': '16px'
+        })
+
+        // Another set of styles
+        expect(div).hasStyles({
+            'padding': '10px',
+            'margin': '20px',
+            'border': '1px solid black'
+        })
+
+        // Negative test - one incorrect value
+        expect(div).not.hasStyles({
+            'color': 'green', // Wrong value
+            'background-color': 'blue'
+        })
+
+        // Negative test - missing property
+        expect(div).not.hasStyles({
+            'color': 'red',
+            'text-align': 'center' // Missing property
+        })
+
+        // Modifying styles
+        div.style.color = 'purple'
+        div.style.textAlign = 'center'
+
+        // Now this should pass
+        expect(div).hasStyles({
+            'color': 'purple',
+            'text-align': 'center'
+        })
+
+        // Setting multiple styles at once with cssText
+        const span = document.createElement('span')
+        span.style.cssText = 'color: green; font-weight: bold; text-decoration: underline; display: inline-block;'
+
+        expect(span).hasStyles({
+            'color': 'green',
+            'font-weight': 'bold',
+            'text-decoration': 'underline',
+            'display': 'inline-block'
+        })
+    })
+})
+```
+
+### hasSiblings()
 `hasSiblings(msg?: string)`
 
 Asserts that the HTML element has siblings.
 
-### hasSibling()
+```javascript
+describe('hasSiblings matcher', () => {
+    it('should check if element has siblings', () => {
+        // In a browser environment
+        // Create a parent with multiple children
+        const parent = document.createElement('div')
 
+        const firstChild = document.createElement('div')
+        const middleChild = document.createElement('span')
+        const lastChild = document.createElement('p')
+
+        // Append children to parent
+        parent.appendChild(firstChild)
+        parent.appendChild(middleChild)
+        parent.appendChild(lastChild)
+
+        // Check for siblings
+        expect(firstChild).hasSiblings() // Has middleChild and lastChild as siblings
+        expect(middleChild).hasSiblings() // Has firstChild and lastChild as siblings
+        expect(lastChild).hasSiblings() // Has firstChild and middleChild as siblings
+
+        // Element without siblings
+        const lonelyElement = document.createElement('div')
+        const lonelyParent = document.createElement('div')
+        lonelyParent.appendChild(lonelyElement)
+
+        expect(lonelyElement).not.hasSiblings() // No siblings
+
+        // Check number of siblings
+        expect(firstChild.parentNode.children.length).toBe(3) // Total children in parent
+        expect(firstChild.parentNode.children.length - 1).toBe(2) // Number of siblings
+
+        // Adding and removing siblings
+        const newSibling = document.createElement('a')
+        lonelyParent.appendChild(newSibling)
+
+        expect(lonelyElement).hasSiblings() // Now has a sibling
+
+        lonelyParent.removeChild(newSibling)
+        expect(lonelyElement).not.hasSiblings() // No siblings again
+
+        // Text nodes are not considered element siblings by default
+        const parentWithText = document.createElement('div')
+        const childElement = document.createElement('span')
+
+        parentWithText.appendChild(document.createTextNode('Text node'))
+        parentWithText.appendChild(childElement)
+
+        // The text node is a sibling of childElement, but hasSiblings typically checks for element siblings
+        // This behavior might vary depending on the implementation of hasSiblings
+    })
+})
+```
+
+### hasSibling()
 `hasSibling(expected: HTMLElement, msg?: string)`
 
 Asserts that the HTML element has a sibling with the specified value.
 
-### hasPrev() 
+```javascript
+describe('hasSibling matcher', () => {
+    it('should check if element has a specific sibling', () => {
+        // In a browser environment
+        // Create a parent with multiple children
+        const parent = document.createElement('div')
 
+        const firstChild = document.createElement('div')
+        firstChild.id = 'first'
+
+        const middleChild = document.createElement('span')
+        middleChild.id = 'middle'
+
+        const lastChild = document.createElement('p')
+        lastChild.id = 'last'
+
+        // Append children to parent
+        parent.appendChild(firstChild)
+        parent.appendChild(middleChild)
+        parent.appendChild(lastChild)
+
+        // Check for specific siblings
+        expect(firstChild).hasSibling(middleChild)
+        expect(firstChild).hasSibling(lastChild)
+        expect(middleChild).hasSibling(firstChild)
+        expect(middleChild).hasSibling(lastChild)
+        expect(lastChild).hasSibling(firstChild)
+        expect(lastChild).hasSibling(middleChild)
+
+        // Element is not a sibling of itself
+        expect(firstChild).not.hasSibling(firstChild)
+
+        // Elements from different parents
+        const otherParent = document.createElement('div')
+        const otherChild = document.createElement('div')
+        otherParent.appendChild(otherChild)
+
+        expect(firstChild).not.hasSibling(otherChild) // Different parent
+
+        // Adding a new sibling
+        const newSibling = document.createElement('a')
+        newSibling.id = 'new'
+        parent.appendChild(newSibling)
+
+        expect(firstChild).hasSibling(newSibling)
+        expect(middleChild).hasSibling(newSibling)
+        expect(lastChild).hasSibling(newSibling)
+        expect(newSibling).hasSibling(firstChild)
+
+        // Removing a sibling
+        parent.removeChild(middleChild)
+
+        expect(firstChild).not.hasSibling(middleChild) // No longer a sibling
+        expect(firstChild).hasSibling(lastChild) // Still a sibling
+        expect(firstChild).hasSibling(newSibling) // Still a sibling
+    })
+})
+```
+
+### hasPrev() 
 `hasPrev(msg?: string)`
 
 Asserts that the HTML element has a previous sibling.
 
-### hasNext()
+```javascript
+describe('hasPrev matcher', () => {
+    it('should check if element has a previous sibling', () => {
+        // In a browser environment
+        // Create a parent with multiple children
+        const parent = document.createElement('div')
 
+        const firstChild = document.createElement('div')
+        const middleChild = document.createElement('span')
+        const lastChild = document.createElement('p')
+
+        // Append children to parent in order
+        parent.appendChild(firstChild)
+        parent.appendChild(middleChild)
+        parent.appendChild(lastChild)
+
+        // Check for previous siblings
+        expect(middleChild).hasPrev() // firstChild is its previous sibling
+        expect(lastChild).hasPrev() // middleChild is its previous sibling
+        expect(firstChild).not.hasPrev() // No previous sibling (it's the first)
+
+        // Access previous sibling
+        expect(middleChild.previousElementSibling).toBe(firstChild)
+        expect(lastChild.previousElementSibling).toBe(middleChild)
+        expect(firstChild.previousElementSibling).toBeNull()
+
+        // Adding a new element at the beginning
+        const newFirst = document.createElement('header')
+        parent.insertBefore(newFirst, firstChild)
+
+        expect(firstChild).hasPrev() // Now it has a previous sibling
+        expect(firstChild.previousElementSibling).toBe(newFirst)
+
+        // Removing an element
+        parent.removeChild(middleChild)
+
+        expect(lastChild.previousElementSibling).toBe(firstChild) // Now firstChild is its previous
+
+        // Text nodes and previous siblings
+        const textParent = document.createElement('div')
+        const textNode = document.createTextNode('Text node')
+        const elementAfterText = document.createElement('span')
+
+        textParent.appendChild(textNode)
+        textParent.appendChild(elementAfterText)
+
+        // previousElementSibling ignores text nodes
+        expect(elementAfterText.previousElementSibling).toBeNull()
+
+        // But previousSibling includes text nodes
+        expect(elementAfterText.previousSibling).toBe(textNode)
+    })
+})
+```
+
+### hasNext()
 `hasNext(msg?: string)`
 
 Asserts that the HTML element has a next sibling.
 
-### hasText()
+```javascript
+describe('hasNext matcher', () => {
+    it('should check if element has a next sibling', () => {
+        // In a browser environment
+        // Create a parent with multiple children
+        const parent = document.createElement('div')
 
+        const firstChild = document.createElement('div')
+        const middleChild = document.createElement('span')
+        const lastChild = document.createElement('p')
+
+        // Append children to parent in order
+        parent.appendChild(firstChild)
+        parent.appendChild(middleChild)
+        parent.appendChild(lastChild)
+
+        // Check for next siblings
+        expect(firstChild).hasNext() // middleChild is its next sibling
+        expect(middleChild).hasNext() // lastChild is its next sibling
+        expect(lastChild).not.hasNext() // No next sibling (it's the last)
+
+        // Access next sibling
+        expect(firstChild.nextElementSibling).toBe(middleChild)
+        expect(middleChild.nextElementSibling).toBe(lastChild)
+        expect(lastChild.nextElementSibling).toBeNull()
+
+        // Adding a new element at the end
+        const newLast = document.createElement('footer')
+        parent.appendChild(newLast)
+
+        expect(lastChild).hasNext() // Now it has a next sibling
+        expect(lastChild.nextElementSibling).toBe(newLast)
+
+        // Removing an element
+        parent.removeChild(middleChild)
+
+        expect(firstChild.nextElementSibling).toBe(lastChild) // Now lastChild is its next
+
+        // Text nodes and next siblings
+        const textParent = document.createElement('div')
+        const elementBeforeText = document.createElement('span')
+        const textNode = document.createTextNode('Text node')
+
+        textParent.appendChild(elementBeforeText)
+        textParent.appendChild(textNode)
+
+        // nextElementSibling ignores text nodes
+        expect(elementBeforeText.nextElementSibling).toBeNull()
+
+        // But nextSibling includes text nodes
+        expect(elementBeforeText.nextSibling).toBe(textNode)
+    })
+})
+```
+
+### hasText()
 `hasText(expected, msg?: string)`
 
 Asserts that the HTML element has the specified text.
+
+```javascript
+describe('hasText matcher', () => {
+    it('should check if element has the specified text', () => {
+        // In a browser environment
+        // Create elements with text content
+        const div = document.createElement('div')
+        div.textContent = 'Hello, world!'
+
+        const span = document.createElement('span')
+        span.textContent = 'This is a test'
+
+        const empty = document.createElement('p')
+
+        // Check for text content
+        expect(div).hasText('Hello, world!')
+        expect(span).hasText('This is a test')
+        expect(empty).not.hasText('Any text') // Empty element
+
+        // Partial text matching (depends on implementation)
+        // Some implementations might support partial matching
+        // expect(div).hasText('Hello')
+        // expect(span).hasText('test')
+
+        // Case sensitivity (depends on implementation)
+        expect(div).not.hasText('hello, world!') // Different case
+
+        // Nested text content
+        const parent = document.createElement('div')
+        const child1 = document.createElement('p')
+        const child2 = document.createElement('span')
+
+        child1.textContent = 'First child'
+        child2.textContent = 'Second child'
+
+        parent.appendChild(child1)
+        parent.appendChild(child2)
+
+        // textContent gets all text, including from child elements
+        expect(parent.textContent).toBe('First childSecond child')
+        expect(parent).hasText('First childSecond child')
+
+        // innerText vs textContent (in a real browser)
+        // innerText respects CSS styling and only returns visible text
+        // textContent returns all text content regardless of visibility
+
+        // Modifying text content
+        div.textContent = 'Updated text'
+        expect(div).hasText('Updated text')
+        expect(div).not.hasText('Hello, world!') // Old text
+
+        // HTML content is treated as text
+        const htmlContent = document.createElement('div')
+        htmlContent.textContent = '<p>This is HTML</p>'
+
+        expect(htmlContent).hasText('<p>This is HTML</p>') // Treated as text, not HTML
+
+        // Setting innerHTML
+        const withHTML = document.createElement('div')
+        withHTML.innerHTML = '<p>Paragraph</p><span>Span</span>'
+
+        // textContent flattens all text nodes
+        expect(withHTML.textContent).toBe('ParagraphSpan')
+        expect(withHTML).hasText('ParagraphSpan')
+    })
+})
+```
 
 ### containsElement()
 
@@ -648,6 +1972,3 @@ Asserts that the React component triggers the specified event.
 `toEventuallyContain(selector, timeout, msg?: string)`
 
 Asserts that the React component eventually contains the specified element within the given timeout.
-
-
-
