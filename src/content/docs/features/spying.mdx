@@ -1,0 +1,101 @@
+---
+title: Spying on Functions
+slug: features/spying
+---
+
+The `spy()` method provides functionality for creating spy wrappers around functions in JavaScript testing environments. 
+This module helps track function calls, arguments, and return values during test execution.
+
+## Overview
+
+A spy wraps around an existing function, preserving all its functionality while adding instrumentation to track invocations. This is useful for verifying how functions are called in unit tests without modifying their behavior.
+
+## API Reference
+
+### spy(originalFn)
+
+Creates a spy wrapper for the specified function.
+
+**Parameters:**
+- `originalFn` {Function} - The original function to spy on
+
+**Returns:**
+- {Function} - A spy function that wraps the original while tracking calls
+
+**Properties:**
+- `original` - Reference to the original function
+- `calls` - Array of recorded calls with arguments, timestamps, and results
+- `callCount` - Number of times the function has been called
+- `lastCall` - Information about the most recent call
+- `isMock` - Boolean flag always set to true
+
+**Methods:**
+- `reset()` - Clears call history
+- `restore()` - Returns the original function
+- `mockReturnValue(value)` - Makes the spy return a specified value
+- `restoreBehaviour()` - Restores the original function behavior after mocking
+- `calledWith(...args)` - Checks if the function was called with specified arguments
+
+## Usage Examples
+
+### Basic Usage
+
+```javascript
+// Create a spy for a function
+const calculate = (a, b) => a + b;
+const calculateSpy = spy(calculate);
+
+// Use the spy function
+calculateSpy(2, 3);
+calculateSpy(10, 5);
+
+// Check call information
+console.log(calculateSpy.callCount);        // 2
+console.log(calculateSpy.calls[0].args);    // [2, 3]
+console.log(calculateSpy.lastCall.result);  // 15
+```
+
+### Mocking Return Values
+
+```javascript
+const fetchData = () => fetch('/api/data');
+const fetchSpy = spy(fetchData);
+
+// Override the return value
+fetchSpy.mockReturnValue({ success: true, data: [1, 2, 3] });
+
+const result = fetchSpy();
+console.log(result);  // { success: true, data: [1, 2, 3] }
+
+// Restore original behavior
+fetchSpy.restoreBehaviour();
+```
+
+### Verifying Call Arguments
+
+```javascript
+const logger = (message, level) => console.log(`[${level}] ${message}`);
+const loggerSpy = spy(logger);
+
+loggerSpy("Operation completed", "INFO");
+loggerSpy("System error", "ERROR");
+
+console.log(loggerSpy.calledWith("System error", "ERROR"));  // true
+console.log(loggerSpy.calledWith("Unknown message"));        // false
+```
+
+## Implementation Notes
+
+- The spy preserves the prototype chain and properties of the original function
+- Function name and other metadata are maintained when possible
+- Call history includes timestamps for measuring performance
+- Special care is taken to avoid copying non-copyable properties
+
+## Compatibility
+
+Works with all JavaScript function types including:
+- Named functions
+- Anonymous functions
+- Arrow functions
+- Class methods
+- Constructors (preserves prototype chain)

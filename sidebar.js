@@ -18,6 +18,7 @@ export default [
             {label: "Testing DOM", slug: "features/dom"},
             {label: "Test Async Code", slug: "features/async-code"},
             {label: "Mocking", slug: "features/mocking"},
+            {label: "Spying on Functions", slug: "features/spying"},
             {label: "Headless Browser", slug: "features/browser"},
         ], 
     },
