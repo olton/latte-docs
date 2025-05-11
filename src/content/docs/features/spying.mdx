@@ -10,6 +10,20 @@ This module helps track function calls, arguments, and return values during test
 
 A spy wraps around an existing function, preserving all its functionality while adding instrumentation to track invocations. This is useful for verifying how functions are called in unit tests without modifying their behavior.
 
+```js
+const sum = (a,  b) => a + b;
+
+suite('Spy Function', () => {
+    it('Test spying', () => {
+        const spySum = spy(sum);
+        const result = spySum(2, 3);
+        expect(result).toBe(5);
+        expect(spySum.callCount).toBe(1);
+        expect(spySum.calls[0].args).toBeArrayEqual([2, 3]);
+    })
+})
+```
+
 ## API Reference
 
 ### spy(originalFn)
