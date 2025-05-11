@@ -183,3 +183,57 @@ const mockFn = mock(() => {}, 'myMockFunction')
 
 console.log(mockFn.name) // myMockFunction
 ```
+
+## Mocking Ajax
+You can mock Ajax requests using the `mock()` function.
+
+### Config
+You can pass a configuration object as the second argument to the `mock()` function.
+
+```js
+const config = {
+    responseStatus: 200,
+    responseText: 'mocked response',
+    responseData: null,
+    // other config options
+};
+const mockAjax = mock(null, config, "ajax");
+
+test('should mock ajax request', async () => {
+    const response = await mockAjax();
+    expect(response).toBe('mocked response');
+});
+
+mockAjax.reset() // Reset the mock function
+```
+
+Function returns an abject with the following properties:
+- `reset()`: Reset the mock function.
+
+## Mocking fetch
+You can mock fetch requests using the `mock()` function.
+
+```js
+const config = {
+    url: '*',
+    method: 'GET',
+    delay: 0,
+    status: 200,
+    statusText: '',
+    responseData: null,
+    responseText: '',
+    headers: {},
+    networkError: false,
+};
+const mockFetch = mock(null, config, "fetch");
+
+test('should mock fetch request', async () => {
+    const response = await mockFetch();
+    expect(response).toBe({ data: 'mocked fetch response' });
+});
+```
+
+Function returns an abject with the following properties:
+- `reset()`: Reset the mock function.
+- `calls()`: Get the calls to the mock function.
+- `clear()`: Clear the calls to the mock function.
