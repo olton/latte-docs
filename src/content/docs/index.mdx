@@ -22,7 +22,6 @@ hero:
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
-import { Icon } from '@astrojs/starlight/components';
 
 <CardGrid>
     <Card>
@@ -42,11 +41,17 @@ import { Icon } from '@astrojs/starlight/components';
     </Card>
 </CardGrid>
 
-
+<div id="jetbrains-plugin">
+    <h3 style={{fontWeight: 100}}>Використовуєш <b style={{fontWeight: 600, margin: 0}}>&nbsp;IntelliJ Idea&nbsp;</b> для розробки?</h3>
+    <div style={{margin: 0}}>Встанови плагін <b>Latte Test Runner</b>!</div>
+    <div className="iframe-wrapper">
+        <iframe width="245px" height="48px" src="https://plugins.jetbrains.com/embeddable/install/27225"></iframe>
+    </div>
+</div>
 
 ## Features
 
-<CardGrid stagger={true}>
+<CardGrid stagger={false}>
 	<Card title="JavaScript/TypeScript" icon="seti:tsconfig">
         Hassle-free testing of JavaScript and TypeScript (with using tsx) code. Write tests in a simple and clear way on JavaScript and TypeScript.
 	</Card>
@@ -66,4 +71,3 @@ import { Icon } from '@astrojs/starlight/components';
         Latte is easy to expand. You can add your own matchers, coverage tools, DOM testing tools, and more.
 	</Card>
 </CardGrid>
-
