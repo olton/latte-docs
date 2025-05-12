@@ -28,7 +28,7 @@ export function forEach(items, callback) {
 To test this function, we can use a mock function, and inspect the mock's state to ensure the callback is invoked as expected.
 
 ```js title=foreach.test.js
-const mockCallback = mocker(x => 42 + x);
+const mockCallback = mock(x => 42 + x);
 
 test('forEach calls callback', () => {
   forEach([0, 1], mockCallback);
@@ -197,7 +197,7 @@ const config = {
     responseData: null,
     // other config options
 };
-const mockAjax = mock(null, config, "ajax");
+const mockAjax = mock(config, "ajax");
 
 test('should mock ajax request', async () => {
     const response = await mockAjax();
@@ -228,7 +228,7 @@ const config = {
     headers: {},
     networkError: false,
 };
-const mockFetch = mock(null, config, "fetch");
+const mockFetch = mock(config, "fetch");
 
 test('should mock fetch request', async () => {
     const response = await mockFetch();
